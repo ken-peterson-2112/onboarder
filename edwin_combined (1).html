@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>edwin — Onboarding Assessment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+:root {
+    /* ══════════════════════════════════════
+       EDWIN BRAND PRIMITIVES
+       From Edwin Colour System brand guide.
+       ══════════════════════════════════════ */
+    --phia-500: #004D80;
+    --phia-400: #017ACC;
+    --phia-300: #2AAEFF;
+    --phia-200: #B1E3FF;
+    --phia-100: #E8F4FD;
+
+    --teal-500: #00424C;
+    --teal-400: #006271;
+    --teal-300: #52BACA;
+    --teal-200: #C2F7FF;
+
+    --activity-500: #460069;
+    --activity-400: #8821BB;
+    --activity-300: #D47DFF;
+    --activity-200: #EDC9FF;
+
+    --coral-500: #821C03;
+    --coral-400: #D5401B;
+    --coral-300: #FD514E;
+    --coral-200: #FFBAA9;
+
+    --warning-500: #A75600;
+    --warning-400: #E47600;
+    --warning-300: #FF9C32;
+    --warning-200: #FFCE9A;
+
+    --success-500: #0F6531;
+    --success-400: #189E4E;
+    --success-300: #40DD7F;
+    --success-200: #B1FFD0;
+
+    --destructive-500: #A6272F;
+    --destructive-400: #DF313C;
+    --destructive-300: #FF555F;
+    --destructive-200: #FFAAAF;
+
+    --neutral-900: #2A2A2A;
+    --neutral-700: #4A4A4A;
+    --neutral-500: #7C7C7C;
+    --neutral-300: #BCBCBC;
+    --neutral-200: #E1E1E1;
+    --neutral-100: #F1F1F1;
+    --neutral-50:  #F8F9FA;
+    --neutral-0:   #FFFFFF;
+
+    /* ══════════════════════════════════════
+       SEMANTIC TOKENS — mapped to Edwin palette.
+       Names kept from the Acorn base so existing
+       styles need no rewrite; dev team can rename
+       later if desired.
+       ══════════════════════════════════════ */
+    --amber:       var(--phia-400);   /* primary action */
+    --amber-hover: var(--phia-500);
+    --amber-soft:  var(--phia-200);
+    --amber-wash:  var(--phia-100);
+    --amber-glow:  rgba(1, 122, 204, 0.14);
+
+    --teal:        var(--teal-400);
+    --teal-soft:   var(--teal-200);
+    --sage:        var(--success-400);
+    --sage-soft:   var(--success-200);
+    --plum:        var(--activity-400);
+    --plum-soft:   var(--activity-200);
+    --rose:        var(--destructive-400);
+    --rose-soft:   var(--destructive-200);
+
+    --cream:       var(--neutral-0);
+    --warm-50:     var(--neutral-50);
+    --warm-100:    var(--neutral-100);
+    --warm-200:    var(--neutral-200);
+    --warm-300:    var(--neutral-300);
+    --warm-400:    var(--neutral-500);
+    --warm-500:    var(--neutral-500);
+    --warm-600:    var(--neutral-700);
+    --warm-700:    var(--neutral-900);
+    --warm-800:    var(--neutral-900);
+    --warm-900:    var(--neutral-900);
+
+    --surface: #ffffff;
+    --text:   var(--neutral-900);
+    --text-2: var(--neutral-700);
+    --text-3: var(--neutral-500);
+    --border: var(--neutral-200);
+    --r-sm: 8px;
+    --r-md: 14px;
+    --r-lg: 20px;
+    --r-xl: 28px;
+    --r-pill: 999px;
+    --shadow-soft: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06);
+    --shadow-card: 0 2px 8px rgba(0,0,0,0.05), 0 12px 36px rgba(0,0,0,0.08);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.5;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+.app {
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: var(--cream);
+    position: relative;
+}
+@media (min-width: 600px) {
+    .app {
+        min-height: auto;
+        margin: 1.5rem auto;
+        border-radius: var(--r-xl);
+        border: 1px solid var(--warm-200);
+        box-shadow: var(--shadow-card);
+        overflow: hidden;
+    }
+}
+
+/* Top Bar */
+.topbar {
+    padding: 0.875rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    background: var(--cream);
+    border-bottom: 1px solid var(--warm-200);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.brand { display: flex; align-items: center; gap: 0.4rem; }
+/* Placeholder text wordmark — swap in real logo asset (SVG/PNG) when available. */
+.brand-wordmark {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--phia-400);
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+.welcome-wordmark {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 2.75rem;
+    color: var(--phia-400);
+    letter-spacing: -0.05em;
+    line-height: 1;
+}
+
+.progress-pill {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.75rem 0.3rem 0.5rem;
+    background: var(--warm-100);
+    border-radius: var(--r-pill);
+    border: 1px solid var(--border);
+}
+.progress-pill.visible { display: flex; }
+
+.progress-ring { width: 22px; height: 22px; transform: rotate(-90deg); }
+.progress-ring-bg { stroke: var(--warm-200); }
+.progress-ring-fill { stroke: var(--amber); transition: stroke-dashoffset 0.6s var(--ease-out); }
+.progress-label { font-size: 0.7rem; font-weight: 600; color: var(--text-2); white-space: nowrap; }
+
+/* Edwin Code pill in the topbar — shown only on results screen */
+.topbar-code {
+    display: none;
+    align-items: center;
+    gap: 0.55rem;
+    min-width: 0;
+    max-width: 70%;
+}
+.topbar-code.visible { display: flex; }
+.topbar-code .code-value {
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--phia-500);
+    letter-spacing: 0.18em;
+    background: var(--surface);
+    border: 1.5px dashed var(--phia-300);
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--r-sm);
+    flex-shrink: 0;
+}
+.topbar-code .code-hint {
+    font-size: 0.7rem;
+    color: var(--text-3);
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+@media (max-width: 540px) {
+    .topbar-code .code-hint { display: none; }
+    .topbar-code { max-width: none; }
+}
+
+/* Screens */
+.screen { display: none; flex: 1; flex-direction: column; opacity: 0; }
+.screen.active { display: flex; animation: fadeUp 0.35s var(--ease-out) forwards; }
+.screen.fade-out { animation: fadeOut 0.15s ease forwards; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+/* Welcome */
+.welcome {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 2rem 1.5rem; text-align: center;
+}
+.welcome-emoji { font-size: 3rem; margin-bottom: 1rem; animation: float 3s ease-in-out infinite; }
+.welcome-emoji img { width: 5rem; height: 5rem; border-radius: var(--r-lg); display: block; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+.welcome h1 {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1.75rem; font-weight: 600;
+    color: var(--warm-800); margin-bottom: 0.5rem;
+    letter-spacing: -0.02em; line-height: 1.2;
+}
+.welcome p { font-size: 0.925rem; color: var(--text-2); max-width: 320px; margin-bottom: 2rem; line-height: 1.6; }
+
+.welcome-chips { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; justify-content: center; }
+.chip {
+    display: flex; align-items: center; gap: 0.35rem;
+    padding: 0.4rem 0.75rem;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    font-size: 0.75rem; font-weight: 600; color: var(--text-2);
+}
+.chip-icon { font-size: 0.85rem; }
+
+.btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 0.4rem; font-family: inherit; font-weight: 700;
+    border: none; cursor: pointer; transition: all 0.15s ease; -webkit-appearance: none;
+}
+.btn-start {
+    padding: 0.85rem 2rem; font-size: 1rem;
+    background: var(--amber); color: white;
+    border-radius: var(--r-pill);
+    box-shadow: 0 2px 12px rgba(194,65,12,0.3);
+}
+.btn-start:hover { background: var(--amber-hover); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(194,65,12,0.35); }
+.btn-start:active { transform: translateY(0); }
+
+/* Assessment */
+.assess { flex: 1; display: flex; flex-direction: column; }
+.assess-body { flex: 1; padding: 1rem 1.25rem; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+.cat-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+.cat-emoji {
+    width: 44px; height: 44px; border-radius: var(--r-md);
+    background: var(--warm-100); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.35rem; flex-shrink: 0;
+}
+.cat-meta { flex: 1; min-width: 0; }
+.cat-step { font-size: 0.65rem; font-weight: 700; color: var(--amber); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.15rem; }
+.cat-title { font-family: 'Inter', system-ui, sans-serif; font-size: 1.15rem; font-weight: 600; color: var(--warm-800); line-height: 1.25; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.steps { display: flex; gap: 4px; margin-bottom: 0.5rem; }
+.step { height: 3px; flex: 1; border-radius: 2px; background: var(--warm-200); transition: background 0.3s ease; }
+.step.done { background: var(--teal); }
+.step.now { background: var(--amber); }
+
+.cat-desc { font-size: 0.825rem; color: var(--text-2); margin-bottom: 0.5rem; line-height: 1.55; height: 4em; overflow: hidden; }
+
+/* Page head — now a flex row with the page step on the left and a `?` help icon on the right */
+.page-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+.page-step {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* Help icon — hover/focus/click reveals a popover with the 4 response options */
+.help-icon {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text-2);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.85rem;
+    line-height: 1;
+    cursor: help;
+    flex-shrink: 0;
+    padding: 0;
+    transition: all 0.15s ease;
+}
+.help-icon:hover,
+.help-icon:focus-visible,
+.help-icon.open {
+    background: var(--phia-100);
+    color: var(--phia-500);
+    border-color: var(--phia-300);
+    outline: none;
+}
+.help-popover {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 270px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    padding: 0.85rem 0.95rem;
+    text-align: left;
+    cursor: default;
+    z-index: 50;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    pointer-events: none;
+}
+.help-icon:hover .help-popover,
+.help-icon:focus-visible .help-popover,
+.help-icon.open .help-popover {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.help-popover .hp-title {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+}
+.help-popover .hp-row {
+    display: flex;
+    gap: 0.55rem;
+    align-items: flex-start;
+    padding: 0.35rem 0;
+}
+.help-popover .hp-row + .hp-row { border-top: 1px solid var(--warm-100); }
+.help-popover .hp-icon { font-size: 1rem; line-height: 1.3; flex-shrink: 0; }
+.help-popover .hp-name { font-size: 0.8rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+.help-popover .hp-desc { font-size: 0.7rem; color: var(--text-2); line-height: 1.4; }
+
+/* ──────────────────────────────────────────
+   Accordion (assessment) — single-screen flow
+   ────────────────────────────────────────── */
+.accordion { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+.accordion-panel {
+    border: 1.5px solid var(--border);
+    border-left: 5px solid var(--stage-color, var(--warm-300));
+    border-radius: var(--r-md);
+    background: var(--surface);
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+    /* When auto-advance scrolls a panel into view, leave room for the sticky topbar */
+    scroll-margin-top: 80px;
+}
+.accordion-panel.open { border-color: var(--stage-color, var(--phia-300)); border-left-color: var(--stage-color); }
+.accordion-panel.complete:not(.open) { border-color: var(--success-200); border-left-color: var(--stage-color); background: #f7fff8; }
+
+.accordion-panel.cat-plan          { --stage-color: var(--phia-400); }
+.accordion-panel.cat-teach         { --stage-color: var(--teal-400); }
+.accordion-panel.cat-differentiate { --stage-color: var(--activity-400); }
+.accordion-panel.cat-assess        { --stage-color: var(--success-400); }
+.accordion-panel.cat-evaluate      { --stage-color: var(--warning-400); }
+
+.acc-header {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    transition: background 0.15s ease;
+}
+.acc-header:hover { background: var(--warm-100); }
+.accordion-panel.open .acc-header { background: var(--warm-100); }
+.acc-header-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+}
+.acc-icon { font-size: 1.2rem; line-height: 1; flex-shrink: 0; }
+.acc-title {
+    flex: 1;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+}
+.acc-desc {
+    font-size: 0.76rem;
+    color: var(--text-2);
+    line-height: 1.4;
+    margin: 0;
+    /* Indent slightly so the description aligns under the title (past the icon) */
+    padding-left: calc(1.2rem + 0.75rem);
+}
+.acc-status {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-3);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--r-pill);
+    background: var(--warm-100);
+}
+.accordion-panel.complete .acc-status {
+    color: var(--success-500);
+    background: var(--success-200);
+}
+.accordion-panel.complete .acc-status::before { content: '✓ '; font-weight: 800; }
+.acc-chevron {
+    font-size: 0.9rem;
+    color: var(--text-3);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+.accordion-panel.open .acc-chevron { transform: rotate(180deg); color: var(--stage-color); }
+
+/* Smooth open/close via grid-rows trick. `overflow: hidden` on .acc-body
+   guards against subpixel padding leaks when collapsed. The body padding
+   is only applied when the panel is .open so even a 1-2px slip wouldn't
+   reveal a white strip beneath the header. */
+.acc-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+    overflow: hidden;
+}
+.accordion-panel.open .acc-body { grid-template-rows: 1fr; }
+.acc-body-inner { overflow: hidden; min-height: 0; padding: 0 1rem; }
+.accordion-panel.open .acc-body-inner { padding: 0.25rem 1rem 0.85rem; }
+
+/* Twinkle when both questions in a stage get completed */
+@keyframes twinkle {
+    0%   { transform: scale(1);    box-shadow: 0 0 0 0 rgba(255, 200, 50, 0.0); }
+    35%  { transform: scale(1.08); box-shadow: 0 0 14px 5px rgba(255, 200, 50, 0.55); }
+    100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(255, 200, 50, 0); }
+}
+.seg label.twinkle { animation: twinkle 0.5s ease-out; }
+
+/* Submit button row */
+.submit-row {
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0 0;
+}
+.submit-row .btn-start[disabled] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+    box-shadow: none;
+}
+
+/* Welcome page: 4 response options shown in-place (replaces the old "How It Works" modal step) */
+.welcome-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 380px;
+    margin-bottom: 1.5rem;
+}
+.welcome-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.6rem 0.7rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    text-align: left;
+}
+.welcome-option .wo-icon { font-size: 1.1rem; line-height: 1.3; flex-shrink: 0; }
+.welcome-option .wo-text { min-width: 0; }
+.welcome-option .wo-name { font-size: 0.8rem; font-weight: 700; color: var(--text); line-height: 1.25; }
+.welcome-option .wo-desc { font-size: 0.65rem; color: var(--text-2); line-height: 1.35; margin-top: 0.1rem; }
+
+.val-msg {
+    display: flex; align-items: center; gap: 0.4rem;
+    padding: 0.5rem 0.75rem; background: var(--rose-soft);
+    color: var(--rose); border-radius: var(--r-md);
+    font-size: 0.75rem; font-weight: 600;
+    margin-bottom: 0.5rem;
+    height: 2.25rem;
+    visibility: hidden; opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+.val-msg.visible { visibility: visible; opacity: 1; pointer-events: auto; }
+
+/* Skill Rows */
+.skill {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r-lg); padding: 0.875rem 1rem;
+    margin-bottom: 0.5rem; transition: all 0.2s ease;
+}
+.skill.needs-answer { border-color: var(--rose); background: var(--rose-soft); animation: shake 0.35s ease; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-3px); } 60% { transform: translateX(3px); } }
+
+.skill-top { margin-bottom: 0.5rem; height: 2.6rem; overflow: hidden; }
+.skill-name { font-weight: 700; font-size: 0.85rem; color: var(--text); line-height: 1.3; }
+.skill-eg { font-size: 0.7rem; color: var(--text-3); margin-top: 0.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Segmented Selector */
+.seg {
+    display: flex; background: var(--warm-100);
+    border-radius: var(--r-md); padding: 3px; gap: 2px; position: relative;
+}
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 1px;
+    padding: 0.4rem 0.25rem; border-radius: calc(var(--r-md) - 2px);
+    cursor: pointer; transition: all 0.2s var(--ease-out);
+    text-align: center; position: relative; z-index: 1;
+    -webkit-user-select: none; user-select: none;
+}
+.seg label:hover { background: rgba(255,255,255,0.6); }
+.seg input:checked + label { background: var(--surface); box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(194,65,12,0.15); }
+.seg-emoji { font-size: 1rem; line-height: 1; }
+.seg-text { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); transition: color 0.2s ease; }
+.seg input:checked + label .seg-text { color: var(--amber); }
+
+/* Bottom Nav */
+.bottomnav {
+    padding: 0.75rem 1.25rem; background: var(--cream);
+    border-top: 1px solid var(--warm-200);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0; position: sticky; bottom: 0; z-index: 10;
+}
+.btn-nav { padding: 0.6rem 1.25rem; font-size: 0.85rem; border-radius: var(--r-pill); }
+.btn-back {
+    background: transparent; color: var(--text-2);
+    border: 1.5px solid var(--border);
+    visibility: hidden; pointer-events: none; transition: all 0.2s ease;
+}
+.btn-back.visible { visibility: visible; pointer-events: all; }
+.btn-back:hover { background: var(--warm-100); border-color: var(--warm-300); color: var(--text); }
+.btn-next {
+    background: var(--amber); color: white;
+    box-shadow: 0 2px 8px rgba(194,65,12,0.25); margin-left: auto;
+}
+.btn-next:hover { background: var(--amber-hover); box-shadow: 0 4px 16px rgba(194,65,12,0.3); transform: translateY(-1px); }
+.btn-next:active { transform: translateY(0); }
+
+/* Results */
+.results { flex: 1; display: flex; flex-direction: column; padding: 0.5rem 1.25rem 1rem; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.results-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 0.5rem; gap: 0.75rem;
+}
+.results-head h1 {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1.15rem; font-weight: 600; color: var(--warm-800);
+    white-space: nowrap;
+}
+
+.radar-wrap { display: flex; justify-content: center; margin-bottom: 0.5rem; }
+.radar-wrap svg { max-width: 220px; width: 100%; height: auto; }
+
+.sum-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.75rem; }
+.sum-chip {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r-md); padding: 0.7rem 0.75rem;
+    display: flex; align-items: center; gap: 0.6rem;
+    position: relative; overflow: hidden;
+    transition: all 0.2s ease;
+}
+.sum-chip::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3.5px; }
+.sum-emoji { font-size: 1.5rem; flex-shrink: 0; }
+.sum-info { min-width: 0; flex: 1; }
+.sum-title { font-size: 0.75rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+.sum-level { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+.sum-bar { height: 6px; border-radius: 3px; margin-top: 0.3rem; background: var(--warm-200); overflow: hidden; }
+.sum-bar-fill { height: 100%; border-radius: 2px; transition: width 0.6s var(--ease-out); }
+
+/* Per-category colors — shade varies by score level */
+/* 📚 LMS — Blue */
+.sum-chip.cat-lms.lv-1 { background: #f0f4ff; border-color: #dbe4ff; } .sum-chip.cat-lms.lv-1::before, .cat-lms .sum-bar-fill { background: #93b4fd; } .cat-lms .sum-level { color: #3b6ee6; } .cat-lms.lv-1 .sum-bar-fill { width:25%; } .cat-lms.lv-2 .sum-bar-fill { width:50%; } .cat-lms.lv-3 .sum-bar-fill { width:75%; } .cat-lms.lv-4 .sum-bar-fill { width:100%; }
+.sum-chip.cat-lms.lv-2 { background: #e0eaff; border-color: #b4ccfd; } .sum-chip.cat-lms.lv-2::before { background: #6a9bf5; }
+.sum-chip.cat-lms.lv-3 { background: #d0dfff; border-color: #93b4fd; } .sum-chip.cat-lms.lv-3::before { background: #4a7cf5; }
+.sum-chip.cat-lms.lv-4 { background: #c0d4ff; border-color: #6a9bf5; } .sum-chip.cat-lms.lv-4::before { background: #2b5dd9; }
+
+/* 🎬 Video — Purple */
+.sum-chip.cat-multimedia.lv-1 { background: #f5f0ff; border-color: #e4d9fd; } .sum-chip.cat-multimedia.lv-1::before, .cat-multimedia .sum-bar-fill { background: #b49cf5; } .cat-multimedia .sum-level { color: #7c3aed; } .cat-multimedia.lv-1 .sum-bar-fill { width:25%; } .cat-multimedia.lv-2 .sum-bar-fill { width:50%; } .cat-multimedia.lv-3 .sum-bar-fill { width:75%; } .cat-multimedia.lv-4 .sum-bar-fill { width:100%; }
+.sum-chip.cat-multimedia.lv-2 { background: #ede5fd; border-color: #c9b5f9; } .sum-chip.cat-multimedia.lv-2::before { background: #9b7af7; }
+.sum-chip.cat-multimedia.lv-3 { background: #e2d6fd; border-color: #b49cf5; } .sum-chip.cat-multimedia.lv-3::before { background: #8b5cf6; }
+.sum-chip.cat-multimedia.lv-4 { background: #d7c8fc; border-color: #9b7af7; } .sum-chip.cat-multimedia.lv-4::before { background: #7338e0; }
+
+/* 🎯 Engagement — Orange */
+.sum-chip.cat-engagement.lv-1 { background: #fff7ed; border-color: #fed7aa; } .sum-chip.cat-engagement.lv-1::before, .cat-engagement .sum-bar-fill { background: #fdba74; } .cat-engagement .sum-level { color: #ea580c; } .cat-engagement.lv-1 .sum-bar-fill { width:25%; } .cat-engagement.lv-2 .sum-bar-fill { width:50%; } .cat-engagement.lv-3 .sum-bar-fill { width:75%; } .cat-engagement.lv-4 .sum-bar-fill { width:100%; }
+.sum-chip.cat-engagement.lv-2 { background: #ffedd5; border-color: #fdba74; } .sum-chip.cat-engagement.lv-2::before { background: #f97316; }
+.sum-chip.cat-engagement.lv-3 { background: #ffe4c4; border-color: #fb923c; } .sum-chip.cat-engagement.lv-3::before { background: #ea580c; }
+.sum-chip.cat-engagement.lv-4 { background: #ffd9ad; border-color: #f97316; } .sum-chip.cat-engagement.lv-4::before { background: #c2410c; }
+
+/* 📊 Assessment — Teal */
+.sum-chip.cat-assessment.lv-1 { background: #f0fdfa; border-color: #ccfbf1; } .sum-chip.cat-assessment.lv-1::before, .cat-assessment .sum-bar-fill { background: #5eead4; } .cat-assessment .sum-level { color: #0d9488; } .cat-assessment.lv-1 .sum-bar-fill { width:25%; } .cat-assessment.lv-2 .sum-bar-fill { width:50%; } .cat-assessment.lv-3 .sum-bar-fill { width:75%; } .cat-assessment.lv-4 .sum-bar-fill { width:100%; }
+.sum-chip.cat-assessment.lv-2 { background: #e0faf5; border-color: #99f6e4; } .sum-chip.cat-assessment.lv-2::before { background: #2dd4bf; }
+.sum-chip.cat-assessment.lv-3 { background: #ccfbf1; border-color: #5eead4; } .sum-chip.cat-assessment.lv-3::before { background: #14b8a6; }
+.sum-chip.cat-assessment.lv-4 { background: #b2f5ea; border-color: #2dd4bf; } .sum-chip.cat-assessment.lv-4::before { background: #0d9488; }
+
+/* ♿ Accessibility — Yellow/Gold */
+.sum-chip.cat-accessibility.lv-1 { background: #fefce8; border-color: #fef08a; } .sum-chip.cat-accessibility.lv-1::before, .cat-accessibility .sum-bar-fill { background: #fbbf24; } .cat-accessibility .sum-level { color: #b45309; } .cat-accessibility.lv-1 .sum-bar-fill { width:25%; } .cat-accessibility.lv-2 .sum-bar-fill { width:50%; } .cat-accessibility.lv-3 .sum-bar-fill { width:75%; } .cat-accessibility.lv-4 .sum-bar-fill { width:100%; }
+.sum-chip.cat-accessibility.lv-2 { background: #fef9c3; border-color: #fde047; } .sum-chip.cat-accessibility.lv-2::before { background: #f59e0b; }
+.sum-chip.cat-accessibility.lv-3 { background: #fef3a0; border-color: #fbbf24; } .sum-chip.cat-accessibility.lv-3::before { background: #d97706; }
+.sum-chip.cat-accessibility.lv-4 { background: #feec7d; border-color: #f59e0b; } .sum-chip.cat-accessibility.lv-4::before { background: #b45309; }
+
+/* 🤖 AI — Red/Rose */
+.sum-chip.cat-ai.lv-1 { background: #fff1f2; border-color: #fecdd3; } .sum-chip.cat-ai.lv-1::before, .cat-ai .sum-bar-fill { background: #fda4af; } .cat-ai .sum-level { color: #e11d48; } .cat-ai.lv-1 .sum-bar-fill { width:25%; } .cat-ai.lv-2 .sum-bar-fill { width:50%; } .cat-ai.lv-3 .sum-bar-fill { width:75%; } .cat-ai.lv-4 .sum-bar-fill { width:100%; }
+.sum-chip.cat-ai.lv-2 { background: #ffe4e6; border-color: #fda4af; } .sum-chip.cat-ai.lv-2::before { background: #fb7185; }
+.sum-chip.cat-ai.lv-3 { background: #fecdd3; border-color: #fb7185; } .sum-chip.cat-ai.lv-3::before { background: #f43f5e; }
+.sum-chip.cat-ai.lv-4 { background: #fbb6be; border-color: #f43f5e; } .sum-chip.cat-ai.lv-4::before { background: #e11d48; }
+
+
+/* Topic + Type pills on rec cards — matched to browse colours */
+.rec-tag-row { display: flex; flex-wrap: wrap; gap: 0.2rem; margin-bottom: 0.3rem; }
+.rec-pill {
+    font-size: 0.5rem; font-weight: 800;
+    padding: 0.1rem 0.4rem; border-radius: var(--r-pill);
+    text-transform: uppercase; letter-spacing: 0.04em;
+}
+/* Stage topic pills — colour-keyed to the Teaching & Learning Cycle */
+.rec-pill.topic-plan          { background: var(--phia-100);     color: var(--phia-500); }
+.rec-pill.topic-teach         { background: var(--teal-200);     color: var(--teal-500); }
+.rec-pill.topic-differentiate { background: var(--activity-200); color: var(--activity-500); }
+.rec-pill.topic-assess        { background: var(--success-200);  color: var(--success-500); }
+.rec-pill.topic-evaluate      { background: var(--warning-200);  color: var(--warning-500); }
+.rec-pill.type-pill { background: var(--warm-100); color: var(--warm-600); }
+/* Source-of-asset pills — Help Centre / Academy / Live Session */
+.rec-pill.src-help    { background: var(--phia-100);     color: var(--phia-500); }
+.rec-pill.src-academy { background: var(--activity-200); color: var(--activity-500); }
+.rec-pill.src-live    { background: var(--warning-200);  color: var(--warning-500); }
+.sec-title {
+    font-size: 0.75rem; font-weight: 800; color: var(--text-2);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.35rem;
+}
+
+a.rec-card {
+    text-decoration: none; color: inherit; display: block;
+}
+a.rec-card:hover { border-color: var(--amber); background: var(--amber-wash); }
+.rec-card { position: relative; }
+
+.rec-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r-md); padding: 0.75rem 0.875rem;
+    display: flex; flex-direction: column;
+    height: 100%;
+}
+.results-recs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+
+/* ──────────────────────────────────────────
+   Topic Chart (results page)
+   ────────────────────────────────────────── */
+.topic-chart {
+    /* Parent is the single grid owner; each .chart-row uses `subgrid`
+       so the Topic / Rating / Action columns align across every row. */
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    background: var(--surface);
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+.chart-row {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+    gap: 0.75rem;
+    padding: 0.7rem 0.9rem;
+    align-items: center;
+    border-top: 1px solid var(--border);
+}
+.chart-row:first-child { border-top: none; }
+.chart-row > :last-child {
+    justify-self: end;
+}
+.chart-topic {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+}
+.chart-icon { font-size: 1rem; flex-shrink: 0; }
+.chart-level {
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--r-pill);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    text-align: center;
+}
+.chart-level.lv-1 { background: var(--neutral-100);   color: var(--neutral-700); }
+.chart-level.lv-2 { background: var(--phia-100);      color: var(--phia-500); }
+.chart-level.lv-3 { background: var(--teal-200);      color: var(--teal-500); }
+.chart-level.lv-4 { background: var(--success-200);   color: var(--success-500); }
+.chart-badge, .chart-article {
+    font-family: inherit;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: var(--r-pill);
+    padding: 0.4rem 0.85rem;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: all 0.15s ease;
+}
+.chart-badge {
+    background: var(--warning-400);
+    color: white;
+}
+.chart-badge:hover { background: var(--warning-500); transform: translateY(-1px); }
+.chart-article {
+    background: var(--phia-100);
+    color: var(--phia-500);
+    border: 1px solid var(--phia-200);
+}
+.chart-article:hover { background: var(--phia-200); }
+
+/* ──────────────────────────────────────────
+   Desktop-friendly results layout
+   ────────────────────────────────────────── */
+@media (min-width: 820px) {
+    .app.results-wide {
+        max-width: 820px;
+    }
+    .results-wide #resultsScreen .results-split {
+        display: grid;
+        grid-template-columns: minmax(240px, 0.9fr) 1.1fr;
+        gap: 1.5rem;
+        align-items: start;
+        margin-bottom: 0.75rem;
+    }
+    .results-wide #resultsScreen .radar-wrap { margin-bottom: 0; }
+    .results-wide #resultsScreen .topic-chart { margin-bottom: 0; }
+    .results-wide #resultsScreen .results-recs-grid {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    .results-wide #resultsScreen .rec-card p { height: auto; min-height: 3.27rem; }
+}
+
+.rec-card h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 0.2rem; display: flex; align-items: center; gap: 0.3rem; }
+.rec-card h4 a:hover { border-color: var(--amber); }
+.rec-card p { font-size: 0.725rem; color: var(--text-2); line-height: 1.5; margin-bottom: 0.4rem; height: 3.27rem; overflow: hidden; }
+.rec-difficulty {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.7rem;
+    font-size: 0.5rem;
+    font-weight: 800;
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--r-pill);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: var(--plum-soft);
+    color: var(--plum);
+}
+.rec-bottom { display: flex; align-items: flex-end; justify-content: space-between; margin-top: auto; gap: 0.4rem; }
+.rec-bottom-tags { display: flex; flex-direction: column; gap: 0.2rem; flex: 1; min-width: 0; }
+.rec-activity-btn {
+    display: inline-flex; align-items: center; gap: 0.2rem;
+    font-family: inherit; font-size: 0.6rem; font-weight: 700;
+    padding: 0.3rem 0.65rem; border-radius: var(--r-pill);
+    background: var(--teal); color: white;
+    text-decoration: none; text-transform: uppercase; letter-spacing: 0.04em;
+    transition: background 0.15s ease;
+    flex-shrink: 0;
+}
+.rec-activity-btn:hover { background: #0f766e; }
+
+
+
+
+.results-actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+.results-actions .btn { flex: 1; padding: 0.65rem 1rem; font-size: 0.8rem; border-radius: var(--r-pill); }
+.btn-ghost { background: var(--amber); color: white; box-shadow: 0 2px 8px rgba(194,65,12,0.2); }
+.btn-ghost:hover { background: var(--amber-hover); }
+.btn-browse { background: var(--teal); color: white; box-shadow: 0 2px 8px rgba(13,148,136,0.2); }
+.btn-browse:hover { background: #0f766e; }
+
+/* ─── How It Works Modal ─── */
+.modal-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(27, 24, 18, 0.5);
+    display: flex; align-items: center; justify-content: center;
+    padding: 1.25rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease;
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+}
+.modal-overlay.visible { opacity: 1; pointer-events: all; }
+
+.modal {
+    background: var(--cream);
+    border-radius: var(--r-xl);
+    padding: 1.75rem 1.5rem 1.25rem;
+    max-width: 420px; width: 100%;
+    box-shadow: var(--shadow-card);
+    transform: translateY(12px) scale(0.97);
+    transition: transform 0.3s var(--ease-out);
+}
+.modal-overlay.visible .modal { transform: translateY(0) scale(1); }
+
+.modal-title {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1.2rem; font-weight: 600;
+    color: var(--warm-800); text-align: center;
+    margin-bottom: 0.25rem;
+}
+.modal-sub {
+    font-size: 0.8rem; color: var(--text-2);
+    text-align: center; margin-bottom: 1.25rem; line-height: 1.5;
+}
+
+.modal-levels { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.25rem; }
+.modal-level {
+    display: flex; align-items: flex-start; gap: 0.65rem;
+    padding: 0.6rem 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+}
+.modal-level-icon { font-size: 1.25rem; flex-shrink: 0; line-height: 1.2; }
+.modal-level-text { min-width: 0; }
+.modal-level-name { font-size: 0.8rem; font-weight: 700; color: var(--text); }
+.modal-level-desc { font-size: 0.7rem; color: var(--text-2); line-height: 1.45; margin-top: 0.1rem; }
+
+.modal-note {
+    font-size: 0.7rem; color: var(--text-3);
+    text-align: center; margin-bottom: 1rem; line-height: 1.5;
+    font-style: italic;
+}
+
+.modal .btn-start {
+    width: 100%; padding: 0.75rem 1.5rem; font-size: 0.95rem;
+}
+
+/* Wider screens — enhance layout */
+@media (min-width: 640px) {
+    .welcome h1 { font-size: 2.1rem; }
+    .welcome p { max-width: 420px; font-size: 1rem; }
+    .radar-wrap svg { max-width: 240px; }
+}
+
+@media (min-width: 900px) {
+    .topbar { padding: 0.875rem 2rem; }
+    .bottomnav { padding: 0.75rem 2rem; }
+}
+@media print {
+    body { background: white; }
+    .app { box-shadow: none; max-width: 100%; }
+    .topbar, .bottomnav { display: none; }
+}
+
+/* ─── Profile Code Display ─── */
+.code-display {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.3rem 0.6rem;
+    background: var(--surface);
+    border: 1.5px dashed var(--warm-200);
+    border-radius: var(--r-pill);
+}
+.code-value {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: 0.15em;
+    user-select: all;
+    cursor: pointer;
+}
+.code-hint {
+    font-size: 0.6rem;
+    color: var(--text-3);
+    line-height: 1.3;
+}
+
+/* ══════════════════════════════════════════════
+   BROWSE SCREEN — resource library
+   ══════════════════════════════════════════════ */
+
+/* Widen app shell while browsing */
+@media (min-width: 600px) {
+    .app.browsing { max-width: 960px; }
+}
+
+.result-count {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-3);
+    padding: 0.25rem 0.6rem;
+    background: var(--warm-100);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    display: none;
+}
+.result-count.visible { display: inline-block; }
+
+/* Browse screen container — override default .screen fade to allow scroll */
+#browseScreen { padding: 0; }
+#browseScreen.active { display: flex; }
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 0.55rem 0.75rem;
+    transition: border-color 0.15s ease;
+}
+.search-bar:focus-within { border-color: var(--amber); }
+.search-icon { font-size: 0.9rem; color: var(--text-3); flex-shrink: 0; }
+.search-bar input {
+    flex: 1; border: none; outline: none; background: none;
+    font-family: inherit; font-size: 0.825rem; color: var(--text);
+}
+.search-bar input::placeholder { color: var(--warm-400); }
+.search-clear {
+    background: none; border: none; cursor: pointer;
+    font-size: 0.7rem; color: var(--text-3); padding: 0.15rem 0.3rem;
+    border-radius: var(--r-sm); display: none;
+}
+.search-clear.visible { display: block; }
+.search-clear:hover { background: var(--warm-100); color: var(--text-2); }
+
+/* Control Panel */
+.control-panel { padding: 1rem 1.25rem; background: var(--cream); }
+
+/* Profile Code Hero */
+.code-hero {
+    padding: 0.75rem 1rem;
+    background: var(--amber-wash);
+    border: 2px solid var(--amber);
+    border-radius: var(--r-lg);
+    margin-bottom: 1rem;
+    box-shadow: 0 0 0 3px var(--amber-glow);
+    animation: pulseGlow 2s ease-in-out infinite;
+    position: relative;
+}
+.code-hero-row { display: flex; align-items: center; gap: 0.75rem; }
+.has-code .code-hero-row { gap: 0.5rem; }
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 0 3px var(--amber-glow); }
+    50% { box-shadow: 0 0 0 6px var(--amber-glow); }
+}
+.code-hero:focus-within { box-shadow: 0 0 0 4px var(--amber-glow); animation: none; }
+.code-hero.has-code {
+    background: var(--amber-wash);
+    border-color: var(--amber-soft);
+    box-shadow: none;
+    animation: none;
+}
+.code-hero-left { flex: 1; min-width: 0; }
+.code-hero-title { font-size: 0.85rem; font-weight: 800; color: var(--amber); margin-bottom: 0.15rem; }
+.has-code .code-hero-left { display: none; }
+.has-code .code-hero-input-group { display: none; }
+.has-code .code-hero-row { display: none; }
+.code-hero-sub { font-size: 0.7rem; color: var(--text-2); line-height: 1.4; }
+
+.code-hero-input-group {
+    display: flex; align-items: center; gap: 0.4rem; flex-shrink: 0;
+}
+.code-hero-input {
+    width: 4.5rem;
+    padding: 0.5rem 0.5rem;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.2em;
+    border: 2px dashed var(--warm-300);
+    border-radius: var(--r-md);
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+.code-hero-input:focus { border-color: var(--amber); border-style: solid; }
+.has-code .code-hero-input {
+    border-style: solid; border-color: var(--amber);
+    background: var(--amber-wash); color: var(--amber);
+}
+.code-hero-input::placeholder { color: var(--warm-300); letter-spacing: 0.1em; font-size: 1rem; }
+.code-hero-go {
+    padding: 0.5rem 1rem;
+    font-family: inherit; font-size: 0.75rem; font-weight: 800;
+    background: var(--amber); color: white;
+    border: none; border-radius: var(--r-md);
+    cursor: pointer; transition: all 0.15s ease;
+    white-space: nowrap;
+}
+.code-hero-go:hover { background: var(--amber-hover); transform: scale(1.03); }
+.code-hero-clear {
+    display: none;
+    padding: 0.5rem 0.75rem;
+    font-family: inherit; font-size: 0.7rem; font-weight: 800;
+    background: var(--warm-200); border: none; color: var(--warm-600);
+    cursor: pointer; border-radius: var(--r-md);
+    transition: all 0.15s ease;
+}
+.code-hero-clear:hover { background: var(--warm-300); color: var(--text); }
+.code-hero-clear.visible { display: block; }
+.code-hero-clear.visible ~ .code-hero-go { display: none; }
+
+/* Profile results embedded in code-hero */
+.code-hero-profile { display: none; }
+.has-code .code-hero-profile { display: block; }
+.code-hero-profile .profile-inner { display: flex; align-items: center; gap: 0.75rem; }
+.code-hero-profile .profile-radar { flex-shrink: 0; width: 120px; height: 120px; }
+.code-hero-profile .profile-radar svg { width: 100%; height: 100%; }
+.code-hero-profile .profile-right {
+    flex: 1; min-width: 0;
+    display: flex; flex-direction: column; gap: 0.35rem;
+}
+.profile-code-row { display: flex; align-items: center; gap: 0.4rem; }
+.profile-code-label {
+    font-size: 0.6rem; font-weight: 800; color: var(--text-3);
+    text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap;
+}
+.profile-code-value {
+    font-family: 'Courier New', monospace;
+    font-size: 1rem; font-weight: 700; color: var(--amber);
+    letter-spacing: 0.15em;
+    background: var(--surface);
+    border: 1.5px solid var(--amber);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--r-sm);
+}
+.profile-code-clear {
+    font-family: inherit; font-size: 0.6rem; font-weight: 800;
+    padding: 0.25rem 0.55rem;
+    background: var(--warm-200); border: none; color: var(--warm-600);
+    cursor: pointer; border-radius: var(--r-sm);
+    transition: all 0.15s ease;
+}
+.profile-code-clear:hover { background: var(--warm-300); color: var(--text); }
+.code-hero-profile .profile-chips {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0.15rem; width: 100%;
+}
+.profile-chip {
+    display: flex; align-items: center; gap: 0.2rem;
+    font-size: 0.55rem;
+    padding: 0.15rem 0.3rem;
+    border-radius: var(--r-sm);
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text-2);
+    min-width: 0;
+}
+.profile-chip .pc-icon { font-size: 0.65rem; flex-shrink: 0; }
+.profile-chip .pc-text { display: flex; flex-direction: column; gap: 0; min-width: 0; }
+.profile-chip .pc-cat { font-weight: 800; color: var(--warm-700); font-size: 0.5rem; line-height: 1.15; }
+.profile-chip .pc-level { font-weight: 600; font-size: 0.45rem; line-height: 1.15; }
+.profile-chip.lv-1 .pc-level { color: var(--warm-400); }
+.profile-chip.lv-2 .pc-level { color: #b45309; }
+.profile-chip.lv-3 .pc-level { color: var(--teal); }
+.profile-chip.lv-4 .pc-level { color: var(--amber); }
+
+/* Filter Grid */
+.filter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+.filter-col {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 0.4rem; padding: 0.6rem 0.5rem;
+    background: var(--warm-50);
+    border: 1px solid var(--warm-200);
+    border-radius: var(--r-md);
+    position: relative;
+}
+.filter-col-clear {
+    position: absolute; top: 0.35rem; right: 0.4rem;
+    font-family: inherit; font-size: 0.5rem; font-weight: 700;
+    color: var(--warm-500);
+    background: none; border: none; cursor: pointer;
+    padding: 0.1rem 0.3rem; border-radius: var(--r-sm);
+    transition: all 0.15s ease;
+    display: none;
+}
+.filter-col-clear:hover { color: var(--amber); background: var(--amber-wash); }
+.filter-col-clear.visible { display: block; }
+.filter-label {
+    font-size: 0.6rem; font-weight: 800; color: var(--text-3);
+    text-transform: uppercase; letter-spacing: 0.08em; text-align: center;
+}
+.filter-row { display: flex; flex-wrap: wrap; gap: 0.3rem; justify-content: center; }
+.filter-pill {
+    padding: 0.3rem 0.6rem;
+    font-family: inherit; font-size: 0.6rem; font-weight: 700;
+    border: 1.5px solid var(--border);
+    border-radius: var(--r-pill);
+    background: var(--surface); color: var(--text-2);
+    cursor: pointer; transition: all 0.15s ease;
+    -webkit-user-select: none; user-select: none;
+}
+.filter-pill:hover { border-color: var(--warm-300); color: var(--text); }
+.filter-pill.active { background: var(--amber); color: white; border-color: var(--amber); }
+.filter-pill.active:hover { background: var(--amber-hover); border-color: var(--amber-hover); }
+
+@media (max-width: 540px) {
+    .filter-grid { grid-template-columns: 1fr; gap: 0.5rem; }
+}
+@media (min-width: 600px) {
+    .control-panel { padding: 1.25rem 1.75rem; }
+}
+@media (min-width: 800px) {
+    .control-panel { padding: 1.25rem 2rem; }
+}
+@media (max-width: 479px) {
+    .code-hero-profile .profile-chips { grid-template-columns: repeat(2, 1fr); }
+    .code-hero-row { flex-direction: column; }
+    .code-hero-left { text-align: center; }
+}
+
+/* Resource Cards */
+.card-list {
+    padding: 0 1.25rem 1.25rem;
+    display: flex; flex-direction: column; gap: 0.5rem;
+}
+.card {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 0.875rem 1rem;
+    text-decoration: none; color: inherit;
+    position: relative;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+}
+a.card:hover { border-color: var(--amber); background: var(--amber-wash); }
+.card-top { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.4rem; }
+.card-icon {
+    width: 36px; height: 36px;
+    background: var(--warm-100); border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+}
+.card-meta { flex: 1; min-width: 0; }
+.card-title { font-size: 0.925rem; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 0.1rem; }
+.card-author { font-size: 0.65rem; font-weight: 600; color: var(--text-3); }
+.card-title-link {
+    color: var(--text); text-decoration: none;
+    border-bottom: 1.5px solid var(--amber-soft);
+    transition: border-color 0.15s ease;
+}
+.card-title-link:hover { border-color: var(--amber); color: var(--amber); }
+.card-desc {
+    font-size: 0.775rem; color: var(--text-2);
+    line-height: 1.5; margin-bottom: 0.5rem;
+    height: 3.5rem; overflow: hidden;
+}
+.card-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 0.5rem; }
+.card-tags { display: flex; flex-direction: column; gap: 0.3rem; flex: 1; min-width: 0; }
+.card-tag-row { display: flex; flex-wrap: wrap; gap: 0.25rem; align-items: center; }
+.card-tag {
+    font-size: 0.55rem; font-weight: 800;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--r-pill);
+    text-transform: uppercase; letter-spacing: 0.04em;
+}
+.card-tag.topic-lms { background: #f0f4ff; color: #3b6ee6; }
+.card-tag.topic-multimedia { background: #f5f0ff; color: #7c3aed; }
+.card-tag.topic-engagement { background: #fff7ed; color: #ea580c; }
+.card-tag.topic-assessment { background: #f0fdfa; color: #0d9488; }
+.card-tag.topic-accessibility { background: #fefce8; color: #b45309; }
+.card-tag.topic-ai { background: #fff1f2; color: #e11d48; }
+.card-tag.type { background: var(--warm-100); color: var(--warm-600); }
+.card-difficulty {
+    position: absolute; top: 0.65rem; right: 0.75rem;
+    font-size: 0.55rem; font-weight: 800;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--r-pill);
+    text-transform: uppercase; letter-spacing: 0.04em;
+}
+.card-difficulty.diff-exploring { background: #f5f0eb; color: var(--warm-500); }
+.card-difficulty.diff-developing { background: #fef3e2; color: #b45309; }
+.card-difficulty.diff-applying { background: var(--teal-soft); color: var(--teal); }
+.card-difficulty.diff-leading { background: var(--amber-wash); color: var(--amber); }
+.card-activity-btn {
+    flex-shrink: 0;
+    display: inline-flex; align-items: center; gap: 0.2rem;
+    font-family: inherit; font-size: 0.65rem; font-weight: 800;
+    padding: 0.3rem 0.75rem; border-radius: var(--r-pill);
+    background: var(--teal); color: white;
+    text-decoration: none; text-transform: uppercase; letter-spacing: 0.04em;
+    transition: background 0.15s ease;
+}
+.card-activity-btn:hover { background: #0f766e; }
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--text-3);
+}
+.empty-state .empty-emoji { font-size: 2rem; margin-bottom: 0.5rem; }
+.empty-state p { font-size: 0.8rem; }
+
+@media (min-width: 600px) {
+    .card-list {
+        padding: 0 1.75rem 1.75rem;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 0.625rem;
+    }
+    .empty-state { grid-column: 1 / -1; }
+}
+@media (min-width: 800px) {
+    .card-list { padding: 0 2rem 2rem; }
+}
+
+/* Invalid Code Modal — reuses .modal-overlay; defines its own box */
+.modal-box {
+    background: var(--surface);
+    border-radius: var(--r-lg);
+    padding: 1.5rem 1.75rem;
+    max-width: 400px; width: 90%;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(43,30,10,0.15);
+    transform: translateY(8px);
+    transition: transform 0.2s ease;
+}
+.modal-overlay.visible .modal-box { transform: translateY(0); }
+.modal-emoji { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.modal-msg {
+    font-size: 0.85rem; color: var(--text);
+    font-weight: 600; margin-bottom: 0.35rem;
+}
+.modal-hint {
+    font-size: 0.7rem; color: var(--text-2);
+    line-height: 1.45; margin-bottom: 1rem;
+}
+.modal-btn {
+    font-family: inherit; font-size: 0.75rem; font-weight: 700;
+    padding: 0.5rem 1.5rem;
+    border: none; border-radius: var(--r-pill);
+    background: var(--amber); color: white;
+    cursor: pointer; transition: background 0.15s ease;
+}
+.modal-btn:hover { background: var(--amber-hover); }
+
+/* Back button on browse screen */
+.browse-back {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    padding: 0.4rem 0.8rem 0.4rem 0.6rem;
+    font-family: inherit; font-size: 0.7rem; font-weight: 700;
+    color: var(--text-2);
+    background: var(--warm-100); border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    cursor: pointer; transition: all 0.15s ease;
+}
+.browse-back:hover { background: var(--warm-200); color: var(--text); }
+    </style>
+</head>
+<body>
+<div class="app">
+    <div class="topbar">
+        <div class="brand">
+            <div class="brand-wordmark">edwin</div>
+        </div>
+        <div class="progress-pill" id="progressPill">
+            <svg class="progress-ring" viewBox="0 0 24 24">
+                <circle class="progress-ring-bg" cx="12" cy="12" r="9" fill="none" stroke-width="3"/>
+                <circle class="progress-ring-fill" id="progressRing" cx="12" cy="12" r="9" fill="none" stroke-width="3"
+                    stroke-linecap="round" stroke-dasharray="56.55" stroke-dashoffset="56.55"/>
+            </svg>
+            <span class="progress-label" id="progressLabel">0/10</span>
+        </div>
+        <!-- Edwin Code pill — visible only on the results screen -->
+        <div class="topbar-code" id="topbarCode">
+            <span class="code-value" id="codeValue">---</span>
+            <span class="code-hint">Enter this code in the Resource Library for personalized picks.</span>
+        </div>
+    </div>
+
+    <section class="screen active" id="welcomeScreen">
+        <div class="welcome">
+            <div class="welcome-emoji"><div class="welcome-wordmark">edwin</div></div>
+            <h1>Welcome to Edwin</h1>
+            <p>A quick check-in to personalize your onboarding. For each question, pick the level that feels most like you right now — there are no wrong answers.</p>
+
+            <div class="welcome-options" aria-label="How to answer">
+                <div class="welcome-option">
+                    <div class="wo-icon">🌱</div>
+                    <div class="wo-text"><div class="wo-name">New to it</div><div class="wo-desc">I haven't had a chance to try this yet.</div></div>
+                </div>
+                <div class="welcome-option">
+                    <div class="wo-icon">📈</div>
+                    <div class="wo-text"><div class="wo-name">Exploring</div><div class="wo-desc">I'm poking around, figuring it out.</div></div>
+                </div>
+                <div class="welcome-option">
+                    <div class="wo-icon">⚡</div>
+                    <div class="wo-text"><div class="wo-name">Comfortable</div><div class="wo-desc">I do this regularly.</div></div>
+                </div>
+                <div class="welcome-option">
+                    <div class="wo-icon">🌟</div>
+                    <div class="wo-text"><div class="wo-name">Confident</div><div class="wo-desc">I could show a colleague how to do this.</div></div>
+                </div>
+            </div>
+
+            <div class="welcome-chips">
+                <div class="chip"><span class="chip-icon">⏱️</span> 2 minutes</div>
+                <div class="chip"><span class="chip-icon">🎯</span> 10 questions</div>
+                <div class="chip"><span class="chip-icon">💡</span> Personalized path</div>
+            </div>
+            <button class="btn btn-start" onclick="startAssessment()">Get Started →</button>
+        </div>
+    </section>
+
+    <section class="screen" id="assessmentScreen">
+        <div class="assess">
+            <div class="assess-body" id="assessBody">
+                <div class="page-head">
+                    <div class="page-step">Edwin Self-Assessment</div>
+                    <button type="button" class="help-icon" id="helpIcon" aria-label="What do the response options mean?" onclick="this.classList.toggle('open')">
+                        ?
+                        <div class="help-popover" role="tooltip">
+                            <div class="hp-title">How to answer</div>
+                            <div class="hp-row"><span class="hp-icon">🌱</span><div><div class="hp-name">New to it</div><div class="hp-desc">I haven't had a chance to try this yet.</div></div></div>
+                            <div class="hp-row"><span class="hp-icon">📈</span><div><div class="hp-name">Exploring</div><div class="hp-desc">I'm poking around, figuring it out.</div></div></div>
+                            <div class="hp-row"><span class="hp-icon">⚡</span><div><div class="hp-name">Comfortable</div><div class="hp-desc">I do this regularly.</div></div></div>
+                            <div class="hp-row"><span class="hp-icon">🌟</span><div><div class="hp-name">Confident</div><div class="hp-desc">I could show a colleague how to do this.</div></div></div>
+                        </div>
+                    </button>
+                </div>
+                <div class="accordion" id="accordion"></div>
+                <div class="submit-row">
+                    <button id="submitBtn" class="btn btn-start" onclick="personalize()" disabled>Personalize my Onboarding →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="screen" id="resultsScreen">
+        <div class="results">
+            <div class="results-head">
+                <h1>Your Edwin Profile</h1>
+            </div>
+            <div class="results-split">
+                <div class="radar-wrap" id="radarWrap"></div>
+                <div class="topic-chart" id="topicChart"></div>
+            </div>
+            <div class="sec-title">📚 Recommended For You</div>
+            <div class="results-recs-grid" id="recsContainer"></div>
+            <div class="results-actions">
+                <button class="btn btn-ghost" onclick="restart()">← Retake</button>
+                <a class="btn btn-browse" href="https://go.edwin.app" target="_blank" rel="noopener">Go to Edwin →</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- How It Works Modal -->
+    <!-- Badge Modal — stub content, real badge-earning steps to be filled in -->
+    <div class="modal-overlay" id="badgeModal" onclick="badgeModalBgClose(event)">
+        <div class="modal">
+            <div class="modal-title">🏆 Earn This Badge</div>
+            <p class="modal-sub">badge earning steps go here</p>
+            <button class="btn btn-start" onclick="closeBadgeModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════
+   ASSESSMENT DATA (categories + skills only)
+   ═══════════════════════════════════ */
+const SCORE_TO_CODE = {"1,1,1,1,1":"A0A","1,1,1,1,2":"A0B","1,1,1,1,3":"A0C","1,1,1,1,4":"A0D","1,1,1,2,1":"A1A","1,1,1,2,2":"A1B","1,1,1,2,3":"A1C","1,1,1,2,4":"A1D","1,1,1,3,1":"A2A","1,1,1,3,2":"A2B","1,1,1,3,3":"A2C","1,1,1,3,4":"A2D","1,1,1,4,1":"A3A","1,1,1,4,2":"A3B","1,1,1,4,3":"A3C","1,1,1,4,4":"A3D","1,1,2,1,1":"A4A","1,1,2,1,2":"A4B","1,1,2,1,3":"A4C","1,1,2,1,4":"A4D","1,1,2,2,1":"A5A","1,1,2,2,2":"A5B","1,1,2,2,3":"A5C","1,1,2,2,4":"A5D","1,1,2,3,1":"A6A","1,1,2,3,2":"A6B","1,1,2,3,3":"A6C","1,1,2,3,4":"A6D","1,1,2,4,1":"A7A","1,1,2,4,2":"A7B","1,1,2,4,3":"A7C","1,1,2,4,4":"A7D","1,1,3,1,1":"A8A","1,1,3,1,2":"A8B","1,1,3,1,3":"A8C","1,1,3,1,4":"A8D","1,1,3,2,1":"A9A","1,1,3,2,2":"A9B","1,1,3,2,3":"A9C","1,1,3,2,4":"A9D","1,1,3,3,1":"B0A","1,1,3,3,2":"B0B","1,1,3,3,3":"B0C","1,1,3,3,4":"B0D","1,1,3,4,1":"B1A","1,1,3,4,2":"B1B","1,1,3,4,3":"B1C","1,1,3,4,4":"B1D","1,1,4,1,1":"B2A","1,1,4,1,2":"B2B","1,1,4,1,3":"B2C","1,1,4,1,4":"B2D","1,1,4,2,1":"B3A","1,1,4,2,2":"B3B","1,1,4,2,3":"B3C","1,1,4,2,4":"B3D","1,1,4,3,1":"B4A","1,1,4,3,2":"B4B","1,1,4,3,3":"B4C","1,1,4,3,4":"B4D","1,1,4,4,1":"B5A","1,1,4,4,2":"B5B","1,1,4,4,3":"B5C","1,1,4,4,4":"B5D","1,2,1,1,1":"B6A","1,2,1,1,2":"B6B","1,2,1,1,3":"B6C","1,2,1,1,4":"B6D","1,2,1,2,1":"B7A","1,2,1,2,2":"B7B","1,2,1,2,3":"B7C","1,2,1,2,4":"B7D","1,2,1,3,1":"B8A","1,2,1,3,2":"B8B","1,2,1,3,3":"B8C","1,2,1,3,4":"B8D","1,2,1,4,1":"B9A","1,2,1,4,2":"B9B","1,2,1,4,3":"B9C","1,2,1,4,4":"B9D","1,2,2,1,1":"C0A","1,2,2,1,2":"C0B","1,2,2,1,3":"C0C","1,2,2,1,4":"C0D","1,2,2,2,1":"C1A","1,2,2,2,2":"C1B","1,2,2,2,3":"C1C","1,2,2,2,4":"C1D","1,2,2,3,1":"C2A","1,2,2,3,2":"C2B","1,2,2,3,3":"C2C","1,2,2,3,4":"C2D","1,2,2,4,1":"C3A","1,2,2,4,2":"C3B","1,2,2,4,3":"C3C","1,2,2,4,4":"C3D","1,2,3,1,1":"C4A","1,2,3,1,2":"C4B","1,2,3,1,3":"C4C","1,2,3,1,4":"C4D","1,2,3,2,1":"C5A","1,2,3,2,2":"C5B","1,2,3,2,3":"C5C","1,2,3,2,4":"C5D","1,2,3,3,1":"C6A","1,2,3,3,2":"C6B","1,2,3,3,3":"C6C","1,2,3,3,4":"C6D","1,2,3,4,1":"C7A","1,2,3,4,2":"C7B","1,2,3,4,3":"C7C","1,2,3,4,4":"C7D","1,2,4,1,1":"C8A","1,2,4,1,2":"C8B","1,2,4,1,3":"C8C","1,2,4,1,4":"C8D","1,2,4,2,1":"C9A","1,2,4,2,2":"C9B","1,2,4,2,3":"C9C","1,2,4,2,4":"C9D","1,2,4,3,1":"D0A","1,2,4,3,2":"D0B","1,2,4,3,3":"D0C","1,2,4,3,4":"D0D","1,2,4,4,1":"D1A","1,2,4,4,2":"D1B","1,2,4,4,3":"D1C","1,2,4,4,4":"D1D","1,3,1,1,1":"D2A","1,3,1,1,2":"D2B","1,3,1,1,3":"D2C","1,3,1,1,4":"D2D","1,3,1,2,1":"D3A","1,3,1,2,2":"D3B","1,3,1,2,3":"D3C","1,3,1,2,4":"D3D","1,3,1,3,1":"D4A","1,3,1,3,2":"D4B","1,3,1,3,3":"D4C","1,3,1,3,4":"D4D","1,3,1,4,1":"D5A","1,3,1,4,2":"D5B","1,3,1,4,3":"D5C","1,3,1,4,4":"D5D","1,3,2,1,1":"D6A","1,3,2,1,2":"D6B","1,3,2,1,3":"D6C","1,3,2,1,4":"D6D","1,3,2,2,1":"D7A","1,3,2,2,2":"D7B","1,3,2,2,3":"D7C","1,3,2,2,4":"D7D","1,3,2,3,1":"D8A","1,3,2,3,2":"D8B","1,3,2,3,3":"D8C","1,3,2,3,4":"D8D","1,3,2,4,1":"D9A","1,3,2,4,2":"D9B","1,3,2,4,3":"D9C","1,3,2,4,4":"D9D","1,3,3,1,1":"E0A","1,3,3,1,2":"E0B","1,3,3,1,3":"E0C","1,3,3,1,4":"E0D","1,3,3,2,1":"E1A","1,3,3,2,2":"E1B","1,3,3,2,3":"E1C","1,3,3,2,4":"E1D","1,3,3,3,1":"E2A","1,3,3,3,2":"E2B","1,3,3,3,3":"E2C","1,3,3,3,4":"E2D","1,3,3,4,1":"E3A","1,3,3,4,2":"E3B","1,3,3,4,3":"E3C","1,3,3,4,4":"E3D","1,3,4,1,1":"E4A","1,3,4,1,2":"E4B","1,3,4,1,3":"E4C","1,3,4,1,4":"E4D","1,3,4,2,1":"E5A","1,3,4,2,2":"E5B","1,3,4,2,3":"E5C","1,3,4,2,4":"E5D","1,3,4,3,1":"E6A","1,3,4,3,2":"E6B","1,3,4,3,3":"E6C","1,3,4,3,4":"E6D","1,3,4,4,1":"E7A","1,3,4,4,2":"E7B","1,3,4,4,3":"E7C","1,3,4,4,4":"E7D","1,4,1,1,1":"E8A","1,4,1,1,2":"E8B","1,4,1,1,3":"E8C","1,4,1,1,4":"E8D","1,4,1,2,1":"E9A","1,4,1,2,2":"E9B","1,4,1,2,3":"E9C","1,4,1,2,4":"E9D","1,4,1,3,1":"F0A","1,4,1,3,2":"F0B","1,4,1,3,3":"F0C","1,4,1,3,4":"F0D","1,4,1,4,1":"F1A","1,4,1,4,2":"F1B","1,4,1,4,3":"F1C","1,4,1,4,4":"F1D","1,4,2,1,1":"F2A","1,4,2,1,2":"F2B","1,4,2,1,3":"F2C","1,4,2,1,4":"F2D","1,4,2,2,1":"F3A","1,4,2,2,2":"F3B","1,4,2,2,3":"F3C","1,4,2,2,4":"F3D","1,4,2,3,1":"F4A","1,4,2,3,2":"F4B","1,4,2,3,3":"F4C","1,4,2,3,4":"F4D","1,4,2,4,1":"F5A","1,4,2,4,2":"F5B","1,4,2,4,3":"F5C","1,4,2,4,4":"F5D","1,4,3,1,1":"F6A","1,4,3,1,2":"F6B","1,4,3,1,3":"F6C","1,4,3,1,4":"F6D","1,4,3,2,1":"F7A","1,4,3,2,2":"F7B","1,4,3,2,3":"F7C","1,4,3,2,4":"F7D","1,4,3,3,1":"F8A","1,4,3,3,2":"F8B","1,4,3,3,3":"F8C","1,4,3,3,4":"F8D","1,4,3,4,1":"F9A","1,4,3,4,2":"F9B","1,4,3,4,3":"F9C","1,4,3,4,4":"F9D","1,4,4,1,1":"G0A","1,4,4,1,2":"G0B","1,4,4,1,3":"G0C","1,4,4,1,4":"G0D","1,4,4,2,1":"G1A","1,4,4,2,2":"G1B","1,4,4,2,3":"G1C","1,4,4,2,4":"G1D","1,4,4,3,1":"G2A","1,4,4,3,2":"G2B","1,4,4,3,3":"G2C","1,4,4,3,4":"G2D","1,4,4,4,1":"G3A","1,4,4,4,2":"G3B","1,4,4,4,3":"G3C","1,4,4,4,4":"G3D","2,1,1,1,1":"G4A","2,1,1,1,2":"G4B","2,1,1,1,3":"G4C","2,1,1,1,4":"G4D","2,1,1,2,1":"G5A","2,1,1,2,2":"G5B","2,1,1,2,3":"G5C","2,1,1,2,4":"G5D","2,1,1,3,1":"G6A","2,1,1,3,2":"G6B","2,1,1,3,3":"G6C","2,1,1,3,4":"G6D","2,1,1,4,1":"G7A","2,1,1,4,2":"G7B","2,1,1,4,3":"G7C","2,1,1,4,4":"G7D","2,1,2,1,1":"G8A","2,1,2,1,2":"G8B","2,1,2,1,3":"G8C","2,1,2,1,4":"G8D","2,1,2,2,1":"G9A","2,1,2,2,2":"G9B","2,1,2,2,3":"G9C","2,1,2,2,4":"G9D","2,1,2,3,1":"H0A","2,1,2,3,2":"H0B","2,1,2,3,3":"H0C","2,1,2,3,4":"H0D","2,1,2,4,1":"H1A","2,1,2,4,2":"H1B","2,1,2,4,3":"H1C","2,1,2,4,4":"H1D","2,1,3,1,1":"H2A","2,1,3,1,2":"H2B","2,1,3,1,3":"H2C","2,1,3,1,4":"H2D","2,1,3,2,1":"H3A","2,1,3,2,2":"H3B","2,1,3,2,3":"H3C","2,1,3,2,4":"H3D","2,1,3,3,1":"H4A","2,1,3,3,2":"H4B","2,1,3,3,3":"H4C","2,1,3,3,4":"H4D","2,1,3,4,1":"H5A","2,1,3,4,2":"H5B","2,1,3,4,3":"H5C","2,1,3,4,4":"H5D","2,1,4,1,1":"H6A","2,1,4,1,2":"H6B","2,1,4,1,3":"H6C","2,1,4,1,4":"H6D","2,1,4,2,1":"H7A","2,1,4,2,2":"H7B","2,1,4,2,3":"H7C","2,1,4,2,4":"H7D","2,1,4,3,1":"H8A","2,1,4,3,2":"H8B","2,1,4,3,3":"H8C","2,1,4,3,4":"H8D","2,1,4,4,1":"H9A","2,1,4,4,2":"H9B","2,1,4,4,3":"H9C","2,1,4,4,4":"H9D","2,2,1,1,1":"I0A","2,2,1,1,2":"I0B","2,2,1,1,3":"I0C","2,2,1,1,4":"I0D","2,2,1,2,1":"I1A","2,2,1,2,2":"I1B","2,2,1,2,3":"I1C","2,2,1,2,4":"I1D","2,2,1,3,1":"I2A","2,2,1,3,2":"I2B","2,2,1,3,3":"I2C","2,2,1,3,4":"I2D","2,2,1,4,1":"I3A","2,2,1,4,2":"I3B","2,2,1,4,3":"I3C","2,2,1,4,4":"I3D","2,2,2,1,1":"I4A","2,2,2,1,2":"I4B","2,2,2,1,3":"I4C","2,2,2,1,4":"I4D","2,2,2,2,1":"I5A","2,2,2,2,2":"I5B","2,2,2,2,3":"I5C","2,2,2,2,4":"I5D","2,2,2,3,1":"I6A","2,2,2,3,2":"I6B","2,2,2,3,3":"I6C","2,2,2,3,4":"I6D","2,2,2,4,1":"I7A","2,2,2,4,2":"I7B","2,2,2,4,3":"I7C","2,2,2,4,4":"I7D","2,2,3,1,1":"I8A","2,2,3,1,2":"I8B","2,2,3,1,3":"I8C","2,2,3,1,4":"I8D","2,2,3,2,1":"I9A","2,2,3,2,2":"I9B","2,2,3,2,3":"I9C","2,2,3,2,4":"I9D","2,2,3,3,1":"J0A","2,2,3,3,2":"J0B","2,2,3,3,3":"J0C","2,2,3,3,4":"J0D","2,2,3,4,1":"J1A","2,2,3,4,2":"J1B","2,2,3,4,3":"J1C","2,2,3,4,4":"J1D","2,2,4,1,1":"J2A","2,2,4,1,2":"J2B","2,2,4,1,3":"J2C","2,2,4,1,4":"J2D","2,2,4,2,1":"J3A","2,2,4,2,2":"J3B","2,2,4,2,3":"J3C","2,2,4,2,4":"J3D","2,2,4,3,1":"J4A","2,2,4,3,2":"J4B","2,2,4,3,3":"J4C","2,2,4,3,4":"J4D","2,2,4,4,1":"J5A","2,2,4,4,2":"J5B","2,2,4,4,3":"J5C","2,2,4,4,4":"J5D","2,3,1,1,1":"J6A","2,3,1,1,2":"J6B","2,3,1,1,3":"J6C","2,3,1,1,4":"J6D","2,3,1,2,1":"J7A","2,3,1,2,2":"J7B","2,3,1,2,3":"J7C","2,3,1,2,4":"J7D","2,3,1,3,1":"J8A","2,3,1,3,2":"J8B","2,3,1,3,3":"J8C","2,3,1,3,4":"J8D","2,3,1,4,1":"J9A","2,3,1,4,2":"J9B","2,3,1,4,3":"J9C","2,3,1,4,4":"J9D","2,3,2,1,1":"K0A","2,3,2,1,2":"K0B","2,3,2,1,3":"K0C","2,3,2,1,4":"K0D","2,3,2,2,1":"K1A","2,3,2,2,2":"K1B","2,3,2,2,3":"K1C","2,3,2,2,4":"K1D","2,3,2,3,1":"K2A","2,3,2,3,2":"K2B","2,3,2,3,3":"K2C","2,3,2,3,4":"K2D","2,3,2,4,1":"K3A","2,3,2,4,2":"K3B","2,3,2,4,3":"K3C","2,3,2,4,4":"K3D","2,3,3,1,1":"K4A","2,3,3,1,2":"K4B","2,3,3,1,3":"K4C","2,3,3,1,4":"K4D","2,3,3,2,1":"K5A","2,3,3,2,2":"K5B","2,3,3,2,3":"K5C","2,3,3,2,4":"K5D","2,3,3,3,1":"K6A","2,3,3,3,2":"K6B","2,3,3,3,3":"K6C","2,3,3,3,4":"K6D","2,3,3,4,1":"K7A","2,3,3,4,2":"K7B","2,3,3,4,3":"K7C","2,3,3,4,4":"K7D","2,3,4,1,1":"K8A","2,3,4,1,2":"K8B","2,3,4,1,3":"K8C","2,3,4,1,4":"K8D","2,3,4,2,1":"K9A","2,3,4,2,2":"K9B","2,3,4,2,3":"K9C","2,3,4,2,4":"K9D","2,3,4,3,1":"L0A","2,3,4,3,2":"L0B","2,3,4,3,3":"L0C","2,3,4,3,4":"L0D","2,3,4,4,1":"L1A","2,3,4,4,2":"L1B","2,3,4,4,3":"L1C","2,3,4,4,4":"L1D","2,4,1,1,1":"L2A","2,4,1,1,2":"L2B","2,4,1,1,3":"L2C","2,4,1,1,4":"L2D","2,4,1,2,1":"L3A","2,4,1,2,2":"L3B","2,4,1,2,3":"L3C","2,4,1,2,4":"L3D","2,4,1,3,1":"L4A","2,4,1,3,2":"L4B","2,4,1,3,3":"L4C","2,4,1,3,4":"L4D","2,4,1,4,1":"L5A","2,4,1,4,2":"L5B","2,4,1,4,3":"L5C","2,4,1,4,4":"L5D","2,4,2,1,1":"L6A","2,4,2,1,2":"L6B","2,4,2,1,3":"L6C","2,4,2,1,4":"L6D","2,4,2,2,1":"L7A","2,4,2,2,2":"L7B","2,4,2,2,3":"L7C","2,4,2,2,4":"L7D","2,4,2,3,1":"L8A","2,4,2,3,2":"L8B","2,4,2,3,3":"L8C","2,4,2,3,4":"L8D","2,4,2,4,1":"L9A","2,4,2,4,2":"L9B","2,4,2,4,3":"L9C","2,4,2,4,4":"L9D","2,4,3,1,1":"M0A","2,4,3,1,2":"M0B","2,4,3,1,3":"M0C","2,4,3,1,4":"M0D","2,4,3,2,1":"M1A","2,4,3,2,2":"M1B","2,4,3,2,3":"M1C","2,4,3,2,4":"M1D","2,4,3,3,1":"M2A","2,4,3,3,2":"M2B","2,4,3,3,3":"M2C","2,4,3,3,4":"M2D","2,4,3,4,1":"M3A","2,4,3,4,2":"M3B","2,4,3,4,3":"M3C","2,4,3,4,4":"M3D","2,4,4,1,1":"M4A","2,4,4,1,2":"M4B","2,4,4,1,3":"M4C","2,4,4,1,4":"M4D","2,4,4,2,1":"M5A","2,4,4,2,2":"M5B","2,4,4,2,3":"M5C","2,4,4,2,4":"M5D","2,4,4,3,1":"M6A","2,4,4,3,2":"M6B","2,4,4,3,3":"M6C","2,4,4,3,4":"M6D","2,4,4,4,1":"M7A","2,4,4,4,2":"M7B","2,4,4,4,3":"M7C","2,4,4,4,4":"M7D","3,1,1,1,1":"M8A","3,1,1,1,2":"M8B","3,1,1,1,3":"M8C","3,1,1,1,4":"M8D","3,1,1,2,1":"M9A","3,1,1,2,2":"M9B","3,1,1,2,3":"M9C","3,1,1,2,4":"M9D","3,1,1,3,1":"N0A","3,1,1,3,2":"N0B","3,1,1,3,3":"N0C","3,1,1,3,4":"N0D","3,1,1,4,1":"N1A","3,1,1,4,2":"N1B","3,1,1,4,3":"N1C","3,1,1,4,4":"N1D","3,1,2,1,1":"N2A","3,1,2,1,2":"N2B","3,1,2,1,3":"N2C","3,1,2,1,4":"N2D","3,1,2,2,1":"N3A","3,1,2,2,2":"N3B","3,1,2,2,3":"N3C","3,1,2,2,4":"N3D","3,1,2,3,1":"N4A","3,1,2,3,2":"N4B","3,1,2,3,3":"N4C","3,1,2,3,4":"N4D","3,1,2,4,1":"N5A","3,1,2,4,2":"N5B","3,1,2,4,3":"N5C","3,1,2,4,4":"N5D","3,1,3,1,1":"N6A","3,1,3,1,2":"N6B","3,1,3,1,3":"N6C","3,1,3,1,4":"N6D","3,1,3,2,1":"N7A","3,1,3,2,2":"N7B","3,1,3,2,3":"N7C","3,1,3,2,4":"N7D","3,1,3,3,1":"N8A","3,1,3,3,2":"N8B","3,1,3,3,3":"N8C","3,1,3,3,4":"N8D","3,1,3,4,1":"N9A","3,1,3,4,2":"N9B","3,1,3,4,3":"N9C","3,1,3,4,4":"N9D","3,1,4,1,1":"O0A","3,1,4,1,2":"O0B","3,1,4,1,3":"O0C","3,1,4,1,4":"O0D","3,1,4,2,1":"O1A","3,1,4,2,2":"O1B","3,1,4,2,3":"O1C","3,1,4,2,4":"O1D","3,1,4,3,1":"O2A","3,1,4,3,2":"O2B","3,1,4,3,3":"O2C","3,1,4,3,4":"O2D","3,1,4,4,1":"O3A","3,1,4,4,2":"O3B","3,1,4,4,3":"O3C","3,1,4,4,4":"O3D","3,2,1,1,1":"O4A","3,2,1,1,2":"O4B","3,2,1,1,3":"O4C","3,2,1,1,4":"O4D","3,2,1,2,1":"O5A","3,2,1,2,2":"O5B","3,2,1,2,3":"O5C","3,2,1,2,4":"O5D","3,2,1,3,1":"O6A","3,2,1,3,2":"O6B","3,2,1,3,3":"O6C","3,2,1,3,4":"O6D","3,2,1,4,1":"O7A","3,2,1,4,2":"O7B","3,2,1,4,3":"O7C","3,2,1,4,4":"O7D","3,2,2,1,1":"O8A","3,2,2,1,2":"O8B","3,2,2,1,3":"O8C","3,2,2,1,4":"O8D","3,2,2,2,1":"O9A","3,2,2,2,2":"O9B","3,2,2,2,3":"O9C","3,2,2,2,4":"O9D","3,2,2,3,1":"P0A","3,2,2,3,2":"P0B","3,2,2,3,3":"P0C","3,2,2,3,4":"P0D","3,2,2,4,1":"P1A","3,2,2,4,2":"P1B","3,2,2,4,3":"P1C","3,2,2,4,4":"P1D","3,2,3,1,1":"P2A","3,2,3,1,2":"P2B","3,2,3,1,3":"P2C","3,2,3,1,4":"P2D","3,2,3,2,1":"P3A","3,2,3,2,2":"P3B","3,2,3,2,3":"P3C","3,2,3,2,4":"P3D","3,2,3,3,1":"P4A","3,2,3,3,2":"P4B","3,2,3,3,3":"P4C","3,2,3,3,4":"P4D","3,2,3,4,1":"P5A","3,2,3,4,2":"P5B","3,2,3,4,3":"P5C","3,2,3,4,4":"P5D","3,2,4,1,1":"P6A","3,2,4,1,2":"P6B","3,2,4,1,3":"P6C","3,2,4,1,4":"P6D","3,2,4,2,1":"P7A","3,2,4,2,2":"P7B","3,2,4,2,3":"P7C","3,2,4,2,4":"P7D","3,2,4,3,1":"P8A","3,2,4,3,2":"P8B","3,2,4,3,3":"P8C","3,2,4,3,4":"P8D","3,2,4,4,1":"P9A","3,2,4,4,2":"P9B","3,2,4,4,3":"P9C","3,2,4,4,4":"P9D","3,3,1,1,1":"Q0A","3,3,1,1,2":"Q0B","3,3,1,1,3":"Q0C","3,3,1,1,4":"Q0D","3,3,1,2,1":"Q1A","3,3,1,2,2":"Q1B","3,3,1,2,3":"Q1C","3,3,1,2,4":"Q1D","3,3,1,3,1":"Q2A","3,3,1,3,2":"Q2B","3,3,1,3,3":"Q2C","3,3,1,3,4":"Q2D","3,3,1,4,1":"Q3A","3,3,1,4,2":"Q3B","3,3,1,4,3":"Q3C","3,3,1,4,4":"Q3D","3,3,2,1,1":"Q4A","3,3,2,1,2":"Q4B","3,3,2,1,3":"Q4C","3,3,2,1,4":"Q4D","3,3,2,2,1":"Q5A","3,3,2,2,2":"Q5B","3,3,2,2,3":"Q5C","3,3,2,2,4":"Q5D","3,3,2,3,1":"Q6A","3,3,2,3,2":"Q6B","3,3,2,3,3":"Q6C","3,3,2,3,4":"Q6D","3,3,2,4,1":"Q7A","3,3,2,4,2":"Q7B","3,3,2,4,3":"Q7C","3,3,2,4,4":"Q7D","3,3,3,1,1":"Q8A","3,3,3,1,2":"Q8B","3,3,3,1,3":"Q8C","3,3,3,1,4":"Q8D","3,3,3,2,1":"Q9A","3,3,3,2,2":"Q9B","3,3,3,2,3":"Q9C","3,3,3,2,4":"Q9D","3,3,3,3,1":"R0A","3,3,3,3,2":"R0B","3,3,3,3,3":"R0C","3,3,3,3,4":"R0D","3,3,3,4,1":"R1A","3,3,3,4,2":"R1B","3,3,3,4,3":"R1C","3,3,3,4,4":"R1D","3,3,4,1,1":"R2A","3,3,4,1,2":"R2B","3,3,4,1,3":"R2C","3,3,4,1,4":"R2D","3,3,4,2,1":"R3A","3,3,4,2,2":"R3B","3,3,4,2,3":"R3C","3,3,4,2,4":"R3D","3,3,4,3,1":"R4A","3,3,4,3,2":"R4B","3,3,4,3,3":"R4C","3,3,4,3,4":"R4D","3,3,4,4,1":"R5A","3,3,4,4,2":"R5B","3,3,4,4,3":"R5C","3,3,4,4,4":"R5D","3,4,1,1,1":"R6A","3,4,1,1,2":"R6B","3,4,1,1,3":"R6C","3,4,1,1,4":"R6D","3,4,1,2,1":"R7A","3,4,1,2,2":"R7B","3,4,1,2,3":"R7C","3,4,1,2,4":"R7D","3,4,1,3,1":"R8A","3,4,1,3,2":"R8B","3,4,1,3,3":"R8C","3,4,1,3,4":"R8D","3,4,1,4,1":"R9A","3,4,1,4,2":"R9B","3,4,1,4,3":"R9C","3,4,1,4,4":"R9D","3,4,2,1,1":"S0A","3,4,2,1,2":"S0B","3,4,2,1,3":"S0C","3,4,2,1,4":"S0D","3,4,2,2,1":"S1A","3,4,2,2,2":"S1B","3,4,2,2,3":"S1C","3,4,2,2,4":"S1D","3,4,2,3,1":"S2A","3,4,2,3,2":"S2B","3,4,2,3,3":"S2C","3,4,2,3,4":"S2D","3,4,2,4,1":"S3A","3,4,2,4,2":"S3B","3,4,2,4,3":"S3C","3,4,2,4,4":"S3D","3,4,3,1,1":"S4A","3,4,3,1,2":"S4B","3,4,3,1,3":"S4C","3,4,3,1,4":"S4D","3,4,3,2,1":"S5A","3,4,3,2,2":"S5B","3,4,3,2,3":"S5C","3,4,3,2,4":"S5D","3,4,3,3,1":"S6A","3,4,3,3,2":"S6B","3,4,3,3,3":"S6C","3,4,3,3,4":"S6D","3,4,3,4,1":"S7A","3,4,3,4,2":"S7B","3,4,3,4,3":"S7C","3,4,3,4,4":"S7D","3,4,4,1,1":"S8A","3,4,4,1,2":"S8B","3,4,4,1,3":"S8C","3,4,4,1,4":"S8D","3,4,4,2,1":"S9A","3,4,4,2,2":"S9B","3,4,4,2,3":"S9C","3,4,4,2,4":"S9D","3,4,4,3,1":"T0A","3,4,4,3,2":"T0B","3,4,4,3,3":"T0C","3,4,4,3,4":"T0D","3,4,4,4,1":"T1A","3,4,4,4,2":"T1B","3,4,4,4,3":"T1C","3,4,4,4,4":"T1D","4,1,1,1,1":"T2A","4,1,1,1,2":"T2B","4,1,1,1,3":"T2C","4,1,1,1,4":"T2D","4,1,1,2,1":"T3A","4,1,1,2,2":"T3B","4,1,1,2,3":"T3C","4,1,1,2,4":"T3D","4,1,1,3,1":"T4A","4,1,1,3,2":"T4B","4,1,1,3,3":"T4C","4,1,1,3,4":"T4D","4,1,1,4,1":"T5A","4,1,1,4,2":"T5B","4,1,1,4,3":"T5C","4,1,1,4,4":"T5D","4,1,2,1,1":"T6A","4,1,2,1,2":"T6B","4,1,2,1,3":"T6C","4,1,2,1,4":"T6D","4,1,2,2,1":"T7A","4,1,2,2,2":"T7B","4,1,2,2,3":"T7C","4,1,2,2,4":"T7D","4,1,2,3,1":"T8A","4,1,2,3,2":"T8B","4,1,2,3,3":"T8C","4,1,2,3,4":"T8D","4,1,2,4,1":"T9A","4,1,2,4,2":"T9B","4,1,2,4,3":"T9C","4,1,2,4,4":"T9D","4,1,3,1,1":"U0A","4,1,3,1,2":"U0B","4,1,3,1,3":"U0C","4,1,3,1,4":"U0D","4,1,3,2,1":"U1A","4,1,3,2,2":"U1B","4,1,3,2,3":"U1C","4,1,3,2,4":"U1D","4,1,3,3,1":"U2A","4,1,3,3,2":"U2B","4,1,3,3,3":"U2C","4,1,3,3,4":"U2D","4,1,3,4,1":"U3A","4,1,3,4,2":"U3B","4,1,3,4,3":"U3C","4,1,3,4,4":"U3D","4,1,4,1,1":"U4A","4,1,4,1,2":"U4B","4,1,4,1,3":"U4C","4,1,4,1,4":"U4D","4,1,4,2,1":"U5A","4,1,4,2,2":"U5B","4,1,4,2,3":"U5C","4,1,4,2,4":"U5D","4,1,4,3,1":"U6A","4,1,4,3,2":"U6B","4,1,4,3,3":"U6C","4,1,4,3,4":"U6D","4,1,4,4,1":"U7A","4,1,4,4,2":"U7B","4,1,4,4,3":"U7C","4,1,4,4,4":"U7D","4,2,1,1,1":"U8A","4,2,1,1,2":"U8B","4,2,1,1,3":"U8C","4,2,1,1,4":"U8D","4,2,1,2,1":"U9A","4,2,1,2,2":"U9B","4,2,1,2,3":"U9C","4,2,1,2,4":"U9D","4,2,1,3,1":"V0A","4,2,1,3,2":"V0B","4,2,1,3,3":"V0C","4,2,1,3,4":"V0D","4,2,1,4,1":"V1A","4,2,1,4,2":"V1B","4,2,1,4,3":"V1C","4,2,1,4,4":"V1D","4,2,2,1,1":"V2A","4,2,2,1,2":"V2B","4,2,2,1,3":"V2C","4,2,2,1,4":"V2D","4,2,2,2,1":"V3A","4,2,2,2,2":"V3B","4,2,2,2,3":"V3C","4,2,2,2,4":"V3D","4,2,2,3,1":"V4A","4,2,2,3,2":"V4B","4,2,2,3,3":"V4C","4,2,2,3,4":"V4D","4,2,2,4,1":"V5A","4,2,2,4,2":"V5B","4,2,2,4,3":"V5C","4,2,2,4,4":"V5D","4,2,3,1,1":"V6A","4,2,3,1,2":"V6B","4,2,3,1,3":"V6C","4,2,3,1,4":"V6D","4,2,3,2,1":"V7A","4,2,3,2,2":"V7B","4,2,3,2,3":"V7C","4,2,3,2,4":"V7D","4,2,3,3,1":"V8A","4,2,3,3,2":"V8B","4,2,3,3,3":"V8C","4,2,3,3,4":"V8D","4,2,3,4,1":"V9A","4,2,3,4,2":"V9B","4,2,3,4,3":"V9C","4,2,3,4,4":"V9D","4,2,4,1,1":"W0A","4,2,4,1,2":"W0B","4,2,4,1,3":"W0C","4,2,4,1,4":"W0D","4,2,4,2,1":"W1A","4,2,4,2,2":"W1B","4,2,4,2,3":"W1C","4,2,4,2,4":"W1D","4,2,4,3,1":"W2A","4,2,4,3,2":"W2B","4,2,4,3,3":"W2C","4,2,4,3,4":"W2D","4,2,4,4,1":"W3A","4,2,4,4,2":"W3B","4,2,4,4,3":"W3C","4,2,4,4,4":"W3D","4,3,1,1,1":"W4A","4,3,1,1,2":"W4B","4,3,1,1,3":"W4C","4,3,1,1,4":"W4D","4,3,1,2,1":"W5A","4,3,1,2,2":"W5B","4,3,1,2,3":"W5C","4,3,1,2,4":"W5D","4,3,1,3,1":"W6A","4,3,1,3,2":"W6B","4,3,1,3,3":"W6C","4,3,1,3,4":"W6D","4,3,1,4,1":"W7A","4,3,1,4,2":"W7B","4,3,1,4,3":"W7C","4,3,1,4,4":"W7D","4,3,2,1,1":"W8A","4,3,2,1,2":"W8B","4,3,2,1,3":"W8C","4,3,2,1,4":"W8D","4,3,2,2,1":"W9A","4,3,2,2,2":"W9B","4,3,2,2,3":"W9C","4,3,2,2,4":"W9D","4,3,2,3,1":"X0A","4,3,2,3,2":"X0B","4,3,2,3,3":"X0C","4,3,2,3,4":"X0D","4,3,2,4,1":"X1A","4,3,2,4,2":"X1B","4,3,2,4,3":"X1C","4,3,2,4,4":"X1D","4,3,3,1,1":"X2A","4,3,3,1,2":"X2B","4,3,3,1,3":"X2C","4,3,3,1,4":"X2D","4,3,3,2,1":"X3A","4,3,3,2,2":"X3B","4,3,3,2,3":"X3C","4,3,3,2,4":"X3D","4,3,3,3,1":"X4A","4,3,3,3,2":"X4B","4,3,3,3,3":"X4C","4,3,3,3,4":"X4D","4,3,3,4,1":"X5A","4,3,3,4,2":"X5B","4,3,3,4,3":"X5C","4,3,3,4,4":"X5D","4,3,4,1,1":"X6A","4,3,4,1,2":"X6B","4,3,4,1,3":"X6C","4,3,4,1,4":"X6D","4,3,4,2,1":"X7A","4,3,4,2,2":"X7B","4,3,4,2,3":"X7C","4,3,4,2,4":"X7D","4,3,4,3,1":"X8A","4,3,4,3,2":"X8B","4,3,4,3,3":"X8C","4,3,4,3,4":"X8D","4,3,4,4,1":"X9A","4,3,4,4,2":"X9B","4,3,4,4,3":"X9C","4,3,4,4,4":"X9D","4,4,1,1,1":"Y0A","4,4,1,1,2":"Y0B","4,4,1,1,3":"Y0C","4,4,1,1,4":"Y0D","4,4,1,2,1":"Y1A","4,4,1,2,2":"Y1B","4,4,1,2,3":"Y1C","4,4,1,2,4":"Y1D","4,4,1,3,1":"Y2A","4,4,1,3,2":"Y2B","4,4,1,3,3":"Y2C","4,4,1,3,4":"Y2D","4,4,1,4,1":"Y3A","4,4,1,4,2":"Y3B","4,4,1,4,3":"Y3C","4,4,1,4,4":"Y3D","4,4,2,1,1":"Y4A","4,4,2,1,2":"Y4B","4,4,2,1,3":"Y4C","4,4,2,1,4":"Y4D","4,4,2,2,1":"Y5A","4,4,2,2,2":"Y5B","4,4,2,2,3":"Y5C","4,4,2,2,4":"Y5D","4,4,2,3,1":"Y6A","4,4,2,3,2":"Y6B","4,4,2,3,3":"Y6C","4,4,2,3,4":"Y6D","4,4,2,4,1":"Y7A","4,4,2,4,2":"Y7B","4,4,2,4,3":"Y7C","4,4,2,4,4":"Y7D","4,4,3,1,1":"Y8A","4,4,3,1,2":"Y8B","4,4,3,1,3":"Y8C","4,4,3,1,4":"Y8D","4,4,3,2,1":"Y9A","4,4,3,2,2":"Y9B","4,4,3,2,3":"Y9C","4,4,3,2,4":"Y9D","4,4,3,3,1":"Z0A","4,4,3,3,2":"Z0B","4,4,3,3,3":"Z0C","4,4,3,3,4":"Z0D","4,4,3,4,1":"Z1A","4,4,3,4,2":"Z1B","4,4,3,4,3":"Z1C","4,4,3,4,4":"Z1D","4,4,4,1,1":"Z2A","4,4,4,1,2":"Z2B","4,4,4,1,3":"Z2C","4,4,4,1,4":"Z2D","4,4,4,2,1":"Z3A","4,4,4,2,2":"Z3B","4,4,4,2,3":"Z3C","4,4,4,2,4":"Z3D","4,4,4,3,1":"Z4A","4,4,4,3,2":"Z4B","4,4,4,3,3":"Z4C","4,4,4,3,4":"Z4D","4,4,4,4,1":"Z5A","4,4,4,4,2":"Z5B","4,4,4,4,3":"Z5C","4,4,4,4,4":"Z5D"};
+
+/* ═══════════════════════════════════════════════════════
+   ASSESSMENT CONTENT — Teaching & Learning Cycle (compact)
+   ───────────────────────────────────────────────────────
+   5 stages × 2 questions = 10 total. Drawn from the 19-item
+   framework — the picks below are the most representative
+   skills for each stage in a teacher's day-to-day workflow.
+
+   Mental model:
+     Assess   → gathering results (the act of testing/checking)
+     Evaluate → reading results (analysis + response)
+
+   Dropped questions (preserved here as a swap-back reference):
+     Plan          — Assessing prior knowledge, Finding long-range plans
+     Teach         — Accessing teacher supports, Printing
+     Differentiate — Accessing all grade levels, Real-world contexts, Creating & assigning Collections for students
+     Assess        — Formative check-for-understanding, Group tasks, Look-fors, Repeated practice
+   ═══════════════════════════════════════════════════════ */
+const DATA={
+    levels:[
+        {id:1,name:"New to it",icon:"🌱",desc:"I haven't had a chance to try this yet"},
+        {id:2,name:"Exploring",icon:"📈",desc:"I'm poking around, figuring it out"},
+        {id:3,name:"Comfortable",icon:"⚡",desc:"I do this regularly"},
+        {id:4,name:"Confident",icon:"🌟",desc:"I could show a colleague how to do this"}
+    ],
+    levelNames:{1:"New to it",2:"Exploring",3:"Comfortable",4:"Confident"},
+    categories:[
+        {id:"plan",icon:"📋",title:"Plan",desc:"Mapping out instruction before you teach.",skills:[
+            {id:"plan-find",name:"Finding lessons and resources",eg:"Searching the Library, applying filters, refining results"},
+            {id:"plan-collections",name:"Creating Collections for planning",eg:"Building a Collection of resources for an upcoming unit"}
+        ]},
+        {id:"teach",icon:"🎓",title:"Teach",desc:"Delivering instruction with Edwin in the classroom.",skills:[
+            {id:"teach-modelling",name:"Teacher modelling & guided learning",eg:"Slideshow / Presentation view, interactive tools"},
+            {id:"teach-groupings",name:"Using Edwin in whole group, small group, or 1:1",eg:"Assigning resources, sharing links, giving students access"}
+        ]},
+        {id:"differentiate",icon:"🎯",title:"Differentiate",desc:"Adapting content and instruction for diverse learners.",skills:[
+            {id:"diff-formats",name:"Using multi-modal resources - videos, interactives, etc.",eg:"Picking the format that fits each learner's needs"},
+            {id:"diff-tools",name:"Embedded learning tools",eg:"Math tools, whiteboard, accessibility features"}
+        ]},
+        {id:"assess",icon:"📝",title:"Assess",desc:"Gathering evidence of student learning.",skills:[
+            {id:"assess-prior",name:"Pre-assessments & diagnostic readiness",eg:"Checking what students already know before a unit or topic"},
+            {id:"assess-summative",name:"Summative assessments",eg:"Final tests, end-of-unit reviews, wrap-ups"}
+        ]},
+        {id:"evaluate",icon:"📊",title:"Evaluate",desc:"Reading the results and responding to what you see.",skills:[
+            {id:"eval-outcomes",name:"Measuring outcomes",eg:"Reviewing class performance, tracking trends across Progress Checks"},
+            {id:"eval-responsive",name:"Responsive instruction",eg:"Self-checks, SEL supports, adjustments via dashboards"}
+        ]}
+    ]
+};
+
+/* ═══════════════════════════════════════════════════════
+   RESOURCE POOL — single curated array (~21 items).
+   Mix of Edwin Help Centre articles, Edwin Academy videos,
+   and a Live Sessions link. All URLs live.
+
+   Shape:
+     cat     → one of the 5 stage IDs (plan/teach/differentiate/assess/evaluate)
+     levels  → which comfort levels benefit (1 = "New to it", 4 = "Confident")
+     type    → "article" | "video" | "live"
+     url     → real destination
+     icon    → emoji shown on the card
+
+   topics / difficulty / types used downstream are derived
+   at load time in the forEach below.
+   ═══════════════════════════════════════════════════════ */
+const RESOURCES = [
+    // ─── Plan ────────────────────────────────────
+    { id:"r01", cat:"plan", levels:[1,2],   type:"video",   icon:"🎬",
+      title:"Introductory Skills in Edwin",
+      desc:"A guided overview of the planning and instructional basics — a good first watch.",
+      url:"https://www.edwin.app/resources-articles/introductory-skills-in-edwin" },
+    { id:"r02", cat:"plan", levels:[1,2,3], type:"article", icon:"🔎",
+      title:"Find Lessons and Resources",
+      desc:"Search the Library, apply filters, and refine results to find exactly what you need.",
+      url:"https://help.edwin.app/s/article/How-to-Find-Content-in-the-Library" },
+    { id:"r03", cat:"plan", levels:[2,3,4], type:"article", icon:"📏",
+      title:"Find Curriculum Alignments",
+      desc:"See which curriculum expectations a resource addresses for your grade and strand.",
+      url:"https://help.edwin.app/s/article/Find-Curriculum-Expectations-for-Content-in-the-Library" },
+    { id:"r04", cat:"plan", levels:[3,4],   type:"article", icon:"🗺️",
+      title:"Long Range Plan Overview",
+      desc:"Use Edwin's long-range plans to scaffold a term or full-year path.",
+      url:"https://help.edwin.app/s/article/Long-Range-Plan-Overview" },
+
+    // ─── Teach ───────────────────────────────────
+    { id:"r05", cat:"teach", levels:[1,2,3], type:"article", icon:"🎥",
+      title:"Share Lessons in Presentation Mode",
+      desc:"Teach from the front of the room with a clean, student-friendly view.",
+      url:"https://help.edwin.app/s/article/Presentation-Mode" },
+    { id:"r06", cat:"teach", levels:[1,2,3], type:"article", icon:"🧰",
+      title:"Find Teacher Resources (BLMs, planners)",
+      desc:"Locate teacher notes, unit guides, BLMs, and other supports inside a resource.",
+      url:"https://help.edwin.app/s/article/access-teacher-planners-black-line-masters" },
+    { id:"r07", cat:"teach", levels:[1,2],   type:"article", icon:"👋",
+      title:"Invite Students to Edwin",
+      desc:"Get your class set up with accounts so they can start using Edwin with you.",
+      url:"https://help.edwin.app/s/article/Inviting-Students" },
+    { id:"r08", cat:"teach", levels:[2,3,4], type:"article", icon:"📤",
+      title:"Share Resources and Collections with Students",
+      desc:"Push a specific resource or a whole Collection to your class.",
+      url:"https://help.edwin.app/s/article/Sharing-Content" },
+
+    // ─── Differentiate ───────────────────────────
+    { id:"r09", cat:"differentiate", levels:[1,2,3],   type:"video",   icon:"🎬",
+      title:"Supporting Differentiated Instruction with Edwin",
+      desc:"Academy overview of differentiation strategies you can run with Edwin.",
+      url:"https://www.edwin.app/resources-articles/supporting-differentiated-instruction-with-edwin" },
+    { id:"r10", cat:"differentiate", levels:[1,2,3,4], type:"article", icon:"♿",
+      title:"Accessibility Features",
+      desc:"Text-to-speech, font sizing, contrast, and more — make Edwin work for every learner.",
+      url:"https://help.edwin.app/s/article/Accessibility-Features" },
+    { id:"r11", cat:"differentiate", levels:[2,3,4],   type:"video",   icon:"🎬",
+      title:"Differentiating Math with Edwin",
+      desc:"Subject-specific differentiation moves for Math.",
+      url:"https://www.edwin.app/resources-articles/differentiating-math-with-edwin" },
+    { id:"r12", cat:"differentiate", levels:[2,3,4],   type:"video",   icon:"🎬",
+      title:"Differentiating Language with Edwin",
+      desc:"Subject-specific differentiation moves for Language / ELA.",
+      url:"https://www.edwin.app/resources-articles/differentiating-language-with-edwin" },
+    { id:"r13", cat:"differentiate", levels:[1,2],     type:"article", icon:"🎓",
+      title:"Choose Your Grades and Subjects",
+      desc:"Personalize what shows up so you can pull from any grade level when adapting.",
+      url:"https://help.edwin.app/s/article/Managing-Your-Library-Settings" },
+
+    // ─── Assess ──────────────────────────────────
+    { id:"r14", cat:"assess", levels:[2,3,4], type:"video",   icon:"🎬",
+      title:"ELA Progress Checks",
+      desc:"Academy walk-through of how ELA Progress Checks work for formative use.",
+      url:"https://www.edwin.app/resources-articles/ela-progress-checks" },
+    { id:"r15", cat:"assess", levels:[1,2,3], type:"article", icon:"📤",
+      title:"Assign Progress Checks to Students",
+      desc:"Push a Progress Check out to your class and track who's completed it.",
+      url:"https://help.edwin.app/s/article/Assign-Progress-Checks-to-Students" },
+    { id:"r16", cat:"assess", levels:[1,2],   type:"article", icon:"📋",
+      title:"Progress Check Dashboard",
+      desc:"See how a Progress Check is landing across your class at a glance.",
+      url:"https://help.edwin.app/s/article/Progress-Check-Dashboard" },
+
+    // ─── Evaluate ────────────────────────────────
+    { id:"r17", cat:"evaluate", levels:[2,3],     type:"article", icon:"🔬",
+      title:"Progress Check Detailed View",
+      desc:"Drill into a specific Progress Check to see per-question, per-student performance.",
+      url:"https://help.edwin.app/s/article/Progress-Check-Detailed-View" },
+    { id:"r18", cat:"evaluate", levels:[3,4],     type:"article", icon:"✍️",
+      title:"Mark Open-Text Responses",
+      desc:"Review and mark open-ended student responses from Language Progress Checks.",
+      url:"https://help.edwin.app/s/article/Mark-Open-Text-Responses-Language" },
+    { id:"r19", cat:"evaluate", levels:[2,3],     type:"video",   icon:"🎬",
+      title:"Dashboards in Edwin",
+      desc:"Academy walk-through of Dashboards — how teachers use them day-to-day.",
+      url:"https://www.edwin.app/resources-articles/dashboards-in-edwin" },
+    { id:"r20", cat:"evaluate", levels:[1,2],     type:"article", icon:"📊",
+      title:"Intro to Dashboards",
+      desc:"What a Dashboard is, when you'd use one, and how to think about setting them up.",
+      url:"https://help.edwin.app/s/article/Intro-to-Dashboards" },
+    { id:"r21", cat:"evaluate", levels:[1,2,3,4], type:"live",    icon:"🗓️",
+      title:"Join an Edwin Academy Live Session",
+      desc:"Sign up for a live walk-through or workshop with the Edwin Academy team.",
+      url:"https://www.edwin.app/edwin-academy-live" }
+];
+
+/* Enrich each resource with derived fields for downstream display. */
+RESOURCES.forEach(r => {
+    const cat = DATA.categories.find(c => c.id === r.cat);
+    r.topics = cat ? [cat.title] : [];
+    r.types = [r.type === 'article' ? 'Article' : r.type === 'video' ? 'Video' : 'Live Session'];
+    r.difficulty = r.levels.map(l => DATA.levelNames[l]).filter(Boolean);
+});
+
+/* ═══════════════════════════════════
+   APP
+   ═══════════════════════════════════ */
+const S={screen:'welcome',resp:{},autoAdvanced:new Set()};
+const $=id=>document.getElementById(id);
+
+function init(){sessionStorage.removeItem('esa');}
+function save(){sessionStorage.setItem('esa',JSON.stringify({r:S.resp}));}
+
+function show(name){
+    const screens=[$('welcomeScreen'),$('assessmentScreen'),$('resultsScreen')];
+    screens.forEach(s=>{if(s.classList.contains('active'))s.classList.add('fade-out');});
+    setTimeout(()=>{
+        screens.forEach(s=>s.classList.remove('active','fade-out'));
+        $(name+'Screen').classList.add('active');
+        $('progressPill').classList.toggle('visible',name==='assessment');
+        $('topbarCode').classList.toggle('visible', name==='results');
+        document.querySelector('.app').classList.toggle('results-wide', name==='results');
+        window.scrollTo(0,0);
+        S.screen=name;
+    },150);
+}
+
+function showBadgeModal(){$('badgeModal').classList.add('visible');}
+function closeBadgeModal(){$('badgeModal').classList.remove('visible');}
+function badgeModalBgClose(e){if(e.target===e.currentTarget)closeBadgeModal();}
+
+function startAssessment(){
+    S.autoAdvanced = new Set();
+    show('assessment');
+    renderAccordion();
+    progress();
+    updateSubmitButton();
+}
+
+/* Render all 5 accordion panels. Stage 1 starts open, others closed. */
+function renderAccordion(){
+    $('accordion').innerHTML = DATA.categories.map((cat, i) => {
+        const isComplete = cat.skills.every(s => S.resp[s.id]);
+        return `<div class="accordion-panel cat-${cat.id} ${i === 0 ? 'open' : ''} ${isComplete ? 'complete' : ''}" id="acc-${cat.id}">
+            <button type="button" class="acc-header" onclick="togglePanel('${cat.id}')" aria-expanded="${i === 0 ? 'true' : 'false'}">
+                <div class="acc-header-row">
+                    <span class="acc-icon">${cat.icon}</span>
+                    <span class="acc-title">${cat.title}</span>
+                    <span class="acc-status">${isComplete ? 'Done' : `${cat.skills.length} questions`}</span>
+                    <span class="acc-chevron" aria-hidden="true">▾</span>
+                </div>
+                <p class="acc-desc">${cat.desc}</p>
+            </button>
+            <div class="acc-body">
+                <div class="acc-body-inner">
+                    ${cat.skills.map(sk => `
+                        <div class="skill" id="sk-${sk.id}">
+                            <div class="skill-top"><div class="skill-name">${sk.name}</div><div class="skill-eg">${sk.eg}</div></div>
+                            <div class="seg">${DATA.levels.map(lv => `
+                                <input type="radio" name="${sk.id}" id="${sk.id}-${lv.id}" value="${lv.id}" ${S.resp[sk.id]===lv.id?'checked':''} onchange="pick('${sk.id}',${lv.id})">
+                                <label for="${sk.id}-${lv.id}"><span class="seg-emoji">${lv.icon}</span><span class="seg-text">${lv.name}</span></label>
+                            `).join('')}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+/* Manual click on an accordion header — collapses any open panel,
+   expands the clicked one (or just collapses if it was already open). */
+function togglePanel(catId){
+    const target = $(`acc-${catId}`);
+    if (!target) return;
+    const wasOpen = target.classList.contains('open');
+    document.querySelectorAll('.accordion-panel.open').forEach(p => {
+        p.classList.remove('open');
+        const btn = p.querySelector('.acc-header');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+    });
+    if (!wasOpen) {
+        target.classList.add('open');
+        const btn = target.querySelector('.acc-header');
+        if (btn) btn.setAttribute('aria-expanded', 'true');
+    }
+}
+
+function pick(id, lv){
+    S.resp[id] = lv;
+    save();
+    progress();
+
+    // Find which stage this skill belongs to
+    const stageIdx = DATA.categories.findIndex(c => c.skills.some(s => s.id === id));
+    if (stageIdx < 0) return;
+    const stage = DATA.categories[stageIdx];
+
+    // Refresh the panel's "complete" state visually
+    const panel = $(`acc-${stage.id}`);
+    const isComplete = stage.skills.every(s => S.resp[s.id]);
+    if (panel) {
+        panel.classList.toggle('complete', isComplete);
+        const status = panel.querySelector('.acc-status');
+        if (status) status.textContent = isComplete ? 'Done' : `${stage.skills.length} questions`;
+    }
+
+    updateSubmitButton();
+
+    // Auto-advance: only the first time a stage gets fully answered.
+    // Editing an answer on a previously-completed stage does NOT re-trigger.
+    if (isComplete && !S.autoAdvanced.has(stage.id)) {
+        S.autoAdvanced.add(stage.id);
+        twinkleStage(stage);
+        // Wait for the twinkle (0.5s) to finish before collapsing/expanding,
+        // so the user clearly sees the confirmation animation first.
+        setTimeout(() => advanceFrom(stageIdx), 550);
+    }
+}
+
+function twinkleStage(stage){
+    stage.skills.forEach(sk => {
+        const lv = S.resp[sk.id];
+        const lbl = document.querySelector(`label[for="${sk.id}-${lv}"]`);
+        if (!lbl) return;
+        lbl.classList.remove('twinkle');
+        // Force reflow so the animation can replay
+        void lbl.offsetWidth;
+        lbl.classList.add('twinkle');
+    });
+}
+
+/* Close the current stage's panel and open the next one. After the
+   transitions settle, scroll the newly opened panel to the top of the
+   viewport so BOTH of its questions are visible at once. The panel's
+   `scroll-margin-top` reserves space for the sticky topbar. */
+function advanceFrom(stageIdx){
+    const cur = $(`acc-${DATA.categories[stageIdx].id}`);
+    if (cur) {
+        cur.classList.remove('open');
+        const btn = cur.querySelector('.acc-header');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+    if (stageIdx + 1 < DATA.categories.length) {
+        const next = $(`acc-${DATA.categories[stageIdx + 1].id}`);
+        if (next) {
+            next.classList.add('open');
+            const btn = next.querySelector('.acc-header');
+            if (btn) btn.setAttribute('aria-expanded', 'true');
+            // Wait for the 0.3s open/close transitions before scrolling so
+            // measurements reflect the post-animation layout.
+            setTimeout(() => {
+                next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 360);
+        }
+    }
+}
+
+function progress(){
+    const total = DATA.categories.reduce((s, c) => s + c.skills.length, 0);
+    const done = Object.keys(S.resp).length;
+    $('progressRing').style.strokeDashoffset = 56.55 * (1 - done / total);
+    $('progressLabel').textContent = `${done}/${total}`;
+}
+
+function updateSubmitButton(){
+    const total = DATA.categories.reduce((s, c) => s + c.skills.length, 0);
+    const done = Object.keys(S.resp).length;
+    const btn = $('submitBtn');
+    if (btn) btn.disabled = done < total;
+}
+
+function personalize(){
+    show('results');
+    renderResults();
+}
+
+function catScore(id){
+    const cat=DATA.categories.find(c=>c.id===id);if(!cat)return 0;
+    const sc=cat.skills.map(s=>S.resp[s.id]||0);
+    return Math.round(sc.reduce((a,b)=>a+b,0)/sc.length);
+}
+
+/* ─── Query Resources ─── */
+function getResourcesForProfile() {
+    const scored = DATA.categories.map(c => ({ cat: c, score: catScore(c.id) }));
+    scored.sort((a, b) => a.score - b.score);
+
+    const decorate = (r, cat) => ({ ...r, catIcon: cat.icon, catTitle: cat.title });
+
+    // Collect matching resources, prioritized by weakest categories
+    const picks = [];
+    const seen = new Set();
+    for (const { cat, score } of scored) {
+        if (picks.length >= 4) break;
+        const matches = RESOURCES.filter(r =>
+            r.cat === cat.id && r.levels.includes(score) && !seen.has(r.title)
+        );
+        for (const r of matches) {
+            if (picks.length >= 4) break;
+            seen.add(r.title);
+            picks.push(decorate(r, cat));
+        }
+    }
+
+    // Guarantee at least one Academy (video) recommendation in the top 4.
+    if (!picks.some(p => p.type === 'video')) {
+        // Prefer a video matching the user's level in their weakest cats,
+        // then any video matching any level, then any video at all.
+        let video = null;
+        for (const { cat, score } of scored) {
+            video = RESOURCES.find(r => r.type === 'video' && r.cat === cat.id && r.levels.includes(score));
+            if (video) { video = decorate(video, cat); break; }
+        }
+        if (!video) {
+            for (const { cat } of scored) {
+                const m = RESOURCES.find(r => r.type === 'video' && r.cat === cat.id);
+                if (m) { video = decorate(m, cat); break; }
+            }
+        }
+        if (!video) {
+            const m = RESOURCES.find(r => r.type === 'video');
+            if (m) {
+                const cat = DATA.categories.find(c => c.id === m.cat) || { icon: '', title: '' };
+                video = decorate(m, cat);
+            }
+        }
+        if (video) {
+            // Replace the lowest-priority pick; or append if we have fewer than 4.
+            if (picks.length >= 4) picks[picks.length - 1] = video;
+            else picks.push(video);
+        }
+    }
+
+    return picks;
+}
+
+/* ─── Radar Chart ─── */
+function radar(cats,fn){
+    const n=cats.length,cx=160,cy=160,R=100,lvs=4;
+    const ang=i=>(Math.PI*2*i/n)-Math.PI/2;
+    const pt=(i,r)=>({x:cx+r*Math.cos(ang(i)),y:cy+r*Math.sin(ang(i))});
+    let g='',ax='';
+    for(let l=1;l<=lvs;l++){const r=(R/lvs)*l;const pts=Array.from({length:n},(_,i)=>pt(i,r));
+        g+=`<polygon points="${pts.map(p=>`${p.x},${p.y}`).join(' ')}" fill="none" stroke="#ddd6c8" stroke-width="${l===lvs?1.2:0.6}" ${l<lvs?'stroke-dasharray="2,2"':''}/>`;}
+    for(let i=0;i<n;i++){const p=pt(i,R);ax+=`<line x1="${cx}" y1="${cy}" x2="${p.x}" y2="${p.y}" stroke="#ddd6c8" stroke-width="0.6"/>`;}
+    const sc=cats.map(c=>fn(c.id)),dp=sc.map((s,i)=>pt(i,(R/lvs)*s));
+    const sh=`<polygon points="${dp.map(p=>`${p.x},${p.y}`).join(' ')}" fill="rgba(194,65,12,0.1)" stroke="#c2410c" stroke-width="2" stroke-linejoin="round"/>`;
+    let d='',lb='';
+    dp.forEach(p=>{d+=`<circle cx="${p.x}" cy="${p.y}" r="4" fill="#c2410c" stroke="white" stroke-width="1.5"/>`;});
+    cats.forEach((c,i)=>{const p=pt(i,R+26);
+        lb+=`<text x="${p.x}" y="${p.y}" text-anchor="middle" dominant-baseline="central" font-size="22">${c.icon}</text>`;});
+    return`<svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">${g}${ax}${sh}${d}${lb}</svg>`;
+}
+
+/* ═══════════════════════════════════════════════════════
+   DATA CAPTURE STUB — TO BE WIRED UP BY DEV TEAM
+   ───────────────────────────────────────────────────────
+   This is the handoff point for success + marketing teams.
+   Currently just logs to console. Replace with a real POST
+   (HubSpot / Segment / internal API / Slack webhook / etc.)
+   once the destination is chosen.
+
+   Payload carries: the 3-char code, per-category scores,
+   raw per-skill responses, and any user identifiers that
+   get captured upstream in the onboarding flow.
+   ═══════════════════════════════════════════════════════ */
+function submitAssessment(payload){
+    console.log('[Edwin Assessment] submit payload', payload);
+    // PoC-only: append to localStorage so the companion analytics page
+    // (edwin_analytics.html) can read submissions across sessions on
+    // this browser. Replace this block with a real POST in production —
+    // the analytics page would then read from the admin API instead.
+    try {
+        const key = 'edwin_submissions';
+        const log = JSON.parse(localStorage.getItem(key) || '[]');
+        log.push(payload);
+        localStorage.setItem(key, JSON.stringify(log));
+    } catch (e) {
+        console.warn('[Edwin Assessment] localStorage unavailable', e);
+    }
+    // TODO: replace with real submission, e.g.:
+    // return fetch('/api/onboarding/assessment', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(payload)
+    // });
+}
+
+/* ─── Render Results ─── */
+function renderResults(){
+    const cats=DATA.categories;
+
+    // Generate Edwin Code from scores
+    const scoreKey = cats.map(c => catScore(c.id)).join(',');
+    const edwinCode = SCORE_TO_CODE[scoreKey];
+    if (edwinCode) {
+        $('codeValue').textContent = edwinCode;
+    }
+
+    // Ship results to success/marketing pipeline (stub)
+    submitAssessment({
+        edwinCode,
+        scores: Object.fromEntries(cats.map(c => [c.id, catScore(c.id)])),
+        responses: S.resp,
+        timestamp: new Date().toISOString()
+    });
+
+    // Radar + summary grid
+    $('radarWrap').innerHTML=radar(cats,catScore);
+
+    // Topic chart — one row per category, with an action:
+    //   - Confident (lv 4)  → "Get the Badge" button (opens modal)
+    //   - anything less     → "Read more →" link to a best-match article
+    $('topicChart').innerHTML = cats.slice()
+        .sort((a,b) => catScore(a.id) - catScore(b.id))
+        .map(c => {
+            const s = catScore(c.id);
+            const levelName = DATA.levelNames[s] || 'N/A';
+            let action;
+            if (s === 4) {
+                action = `<button class="chart-badge" onclick="showBadgeModal()">🏆 Get the Badge</button>`;
+            } else {
+                const article = RESOURCES.find(r => r.cat === c.id && r.levels.includes(s) && r.type === 'article')
+                             || RESOURCES.find(r => r.cat === c.id && r.levels.includes(s))
+                             || RESOURCES.find(r => r.cat === c.id);
+                action = article
+                    ? `<a class="chart-article" href="${article.url}" target="_blank" rel="noopener">Read more →</a>`
+                    : `<span style="font-size:0.7rem;color:var(--text-3);">—</span>`;
+            }
+            return `<div class="chart-row">
+                <div class="chart-topic"><span class="chart-icon">${c.icon}</span>${c.title}</div>
+                <div class="chart-level lv-${s}">${levelName}</div>
+                <div>${action}</div>
+            </div>`;
+        }).join('');
+
+    // Query the resource DB
+    const resources = getResourcesForProfile();
+
+    // Render recommended resources
+    const topicCls = {plan:'topic-plan',teach:'topic-teach',differentiate:'topic-differentiate',assess:'topic-assess',evaluate:'topic-evaluate'};
+    const sourceMeta = {
+        article: { cls: 'src-help',    label: 'Help Centre'  },
+        video:   { cls: 'src-academy', label: 'Academy'      },
+        live:    { cls: 'src-live',    label: 'Live Session' }
+    };
+    $('recsContainer').innerHTML = resources.map(r => {
+        const titleLink = r.url ? `<a href="${r.url}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1.5px solid var(--amber-soft);">${r.title}</a>` : r.title;
+        const src = sourceMeta[r.type] || sourceMeta.article;
+        return `<div class="rec-card">
+            <h4>${r.icon} ${titleLink}</h4>
+            <p>${r.desc}</p>
+            <div class="rec-bottom">
+                <div class="rec-bottom-tags">
+                    <div class="rec-tag-row">
+                        <span class="rec-pill ${topicCls[r.cat] || ''}">${r.catTitle}</span>
+                        <span class="rec-pill ${src.cls}">${src.label}</span>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }).join('') || '<p style="font-size:0.8rem;color:var(--text-3);padding:0.5rem 0;">Great work — you\'re advanced across the board! Keep mentoring colleagues.</p>';
+}
+
+function restart(){S.resp={};S.autoAdvanced=new Set();sessionStorage.removeItem('esa');show('welcome');}
+
+init();
+
+</script>
+</body>
+</html>
